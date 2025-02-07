@@ -21,8 +21,45 @@
         <ul>
             <li><button>Default</button></li>
         </ul>
+
     </nav>
-    <main id="currentDisplay"></main>
+    <main id="currentDisplay">
+        <div>
+            <h1 id="1" class="project">Default</h1>
+            <div class="task"></div>
+            <div class="task"></div>
+            <div class="task"></div>
+            <div class="task"></div>
+            <button id="add">Add</button>
+        </div>
+    </main>
+    <dialog id="dialog">
+        <form action="" id="inputForm">
+            <h2>New Task</h2>
+            <div class="input-field">
+                <label for="name">Name</label>
+                <input type="text" name="title" id="name">
+            </div>
+            <div class="input-field">
+                <label for="description">Description</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div class="input-field">
+                <label for="date">Date</label>
+                <input type="date" name="date" id="date">
+            </div>
+            <div class="input-field">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <input type="submit" id="submit">
+        </form>
+    </dialog>
+
 </body>
 
 </html>
