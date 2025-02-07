@@ -42,17 +42,12 @@ const inputForm = document.getElementById("inputForm");
 const dialog = document.getElementById("dialog");
 
 document.body.addEventListener("click", (e) => {
-  if (e.target.id === "add") {
+  if (e.target.id === "addBtn") {
     dialog.showModal();
   }
 
   if (e.target.id === "home") {
-    projects.forEach((project) => {
-      console.log(project.title);
-      project.tasks.forEach((task) => {
-        console.log(`${task.title} ${task.description}`);
-      });
-    });
+    displayAllTasks();
   }
 });
 
@@ -72,3 +67,25 @@ inputForm.addEventListener("submit", (e) => {
   dialog.close();
   inputForm.reset();
 });
+
+function displayAllTasks() {
+  currentDisplay.innerHTML = "";
+  const fragment = document.createDocumentFragment();
+
+  projects.forEach((project, index) => {
+    const projectIndex = index;
+
+    project.tasks.forEach((task, index) => {
+      const taskDiv = document.createElement("div");
+      taskDiv.id = index;
+      taskDiv.dataset.projectIndex = projectIndex;
+      taskDiv.innerHTML = `         
+          <h3>${task.title}</h3>
+          <p>${task.description}</p>
+          <p>${task.date}</p>
+          <p>${task.status}</p>`;
+      fragment.append(taskDiv);
+    });
+    currentDisplay.append(fragment);
+  });
+}

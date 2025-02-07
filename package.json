@@ -3,7 +3,7 @@
     "build": "webpack",
     "dev": "webpack serve",
     "deploy": "git subtree push --prefix dist origin gh-pages",
-    "add-commit": "git add . && git commit"
+    "ac": "git add . && git commit"
   },
   "devDependencies": {
     "css-loader": "^7.1.2",
