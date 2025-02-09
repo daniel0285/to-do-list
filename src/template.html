@@ -12,23 +12,26 @@
         <h1>To Do List</h1>
     </header>
     <nav>
-        <ul>
+        <ul id="filter">
             <li><button id="home">Home</button></li>
             <li><button id="today">Today</button></li>
             <li><button id="week">Week</button></li>
         </ul>
         <h2>Project</h2>
-        <ul>
-            <li><button>Default</button></li>
+        <ul id="projects">
+            <li><button data-project-index="0" class="js-project-btn">Default</button></li>
         </ul>
-
+        <form action="" id="projectForm" class="hidden">
+            <label for='projectInput'>Project Name</label>
+            <input type='text' name='title' required>
+            <input type='submit' value='Submit'>
+        </form>
+        <button id="projectBtn">New Project</button>
     </nav>
     <main id="currentDisplay">
-        <div>
-
-        </div>
+        <div></div>
+        <button id="addBtn">Add</button>
     </main>
-    <button id="addBtn">Add</button>
     <dialog id="dialog">
         <form action="" id="inputForm">
             <h2>New Task</h2>
