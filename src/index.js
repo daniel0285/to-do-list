@@ -27,18 +27,18 @@ const projects = [
       },
     ],
   },
-  {
-    title: "Default 2",
-    tasks: [
-      {
-        title: "Task #1 from default 2",
-        description: "Description Here",
-        date: "Today",
-        priority: "Important",
-        status: "Not Finished",
-      },
-    ],
-  },
+  // {
+  //   title: "Default 2",
+  //   tasks: [
+  //     {
+  //       title: "Task #1 from default 2",
+  //       description: "Description Here",
+  //       date: "Today",
+  //       priority: "Important",
+  //       status: "Not Finished",
+  //     },
+  //   ],
+  // },
 ];
 
 class Task {
@@ -50,8 +50,6 @@ class Task {
     this.status = status;
   }
 }
-
-const currentDisplay = document.getElementById("currentDisplay");
 
 document.body.addEventListener("click", (e) => {
   if (e.target.id === "addBtn") {
@@ -79,75 +77,101 @@ document.body.addEventListener("submit", (e) => {
   }
 
   if (e.target.id === "projectForm") {
-    const form = new FormData(e.target);
-    const project = Object.fromEntries(form);
-    projects.push({ title: project.title, tasks: [] });
-
-    const projectList = document.getElementById("projects");
-    const list = document.createElement("li");
-    const btn = document.createElement("button");
-
-    btn.innerText = project.title;
-    btn.dataset.projectIndex = projects.length - 1;
-    btn.className = "js-project-btn";
-    list.append(btn);
-    projectList.append(list);
-
-    toggleForm();
-    e.target.reset();
+    createNewProject(e);
   }
 });
 
-function filterByProject(e) {
-  currentDisplay.innerHTML = "";
+function createNewProject(e) {
+  const form = new FormData(e.target);
+  const project = Object.fromEntries(form);
+  const projectList = document.getElementById("projects");
+
+  projects.push({ title: project.title, tasks: [] });
+  const index = project.length - 1;
+
+  projectList.append(createProjectButton(project.title, index));
+  toggleForm();
+  e.target.reset();
+}
+
+function createProjectButton(title, index) {
+  const list = document.createElement("li");
+  const btn = document.createElement("button");
+
+  btn.innerText = title;
+  btn.dataset.projectIndex = index;
+  btn.className = "js-project-btn";
+  list.append(btn);
+
+  return list;
+}
+
+function createTaskElements(tasks, index) {
   const fragment = document.createDocumentFragment();
+  const projectIndex = index;
 
-  const text = e.target.textContent;
-  // The code below finds the index of the target based on the text content
-  const projectIndex = projects.map((task) => task.title).indexOf(text);
-
-  projects[projectIndex].tasks.forEach((task, index) => {
-    const taskDiv = document.createElement("div");
-    taskDiv.id = index;
-    taskDiv.dataset.projectIndex = projectIndex;
-
-    const status = document.createElement("p");
-    status.textContent = task.status;
-    const title = document.createElement("h3");
-    title.textContent = task.title;
-    const date = document.createElement("p");
-    date.textContent = task.date;
-
-    taskDiv.append(title, date, status);
-    fragment.append(taskDiv);
-    currentDisplay.append(fragment);
+  tasks.forEach((task, index) => {
+    fragment.append(createTask(task, index, projectIndex));
   });
+
+  return fragment;
+}
+
+function createTask(task, index, projectIndex) {
+  const taskDiv = document.createElement("div");
+  taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
+  taskDiv.id = index;
+  taskDiv.dataset.projectIndex = projectIndex;
+
+  const status = document.createElement("p");
+  const title = document.createElement("h3");
+  const date = document.createElement("p");
+  const viewBtn = document.createElement("button");
+  const editBtn = document.createElement("button");
+  const deleteBtn = document.createElement("button");
+
+  status.textContent = task.status;
+  title.textContent = task.title;
+  date.textContent = task.date;
+  viewBtn.className = "btn view";
+  viewBtn.textContent = "View";
+  editBtn.className = "btn edit";
+  editBtn.textContent = "Edit";
+  deleteBtn.textContent = "Delete";
+
+  taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
+  return taskDiv;
+}
+
+const currentDisplay = document.querySelector("#currentDisplay > div");
+
+function filterByProject(e) {
+  const text = e.target.textContent;
+  const projectIndex = e.target.dataset.projectIndex;
+  changeHeaderContent(text, projectIndex);
+
+  currentDisplay.innerHTML = "";
+  currentDisplay.append(
+    createTaskElements(projects[projectIndex].tasks, projectIndex)
+  );
+}
+
+function changeHeaderContent(text, index = 0) {
+  const projectTitle = document.querySelector(".project-title");
+  projectTitle.innerText = text;
+  projectTitle.dataset.projectIndex = index;
 }
 
 function displayAllTasks() {
   currentDisplay.innerHTML = "";
   const fragment = document.createDocumentFragment();
+  changeHeaderContent("Home");
 
   projects.forEach((project, index) => {
-    const projectIndex = index;
-
-    project.tasks.forEach((task, index) => {
-      const taskDiv = document.createElement("div");
-      taskDiv.id = index;
-      taskDiv.dataset.projectIndex = projectIndex;
-
-      const status = document.createElement("p");
-      status.textContent = task.status;
-      const title = document.createElement("h3");
-      title.textContent = task.title;
-      const date = document.createElement("p");
-      date.textContent = task.date;
-
-      taskDiv.append(title, date, status);
-      fragment.append(taskDiv);
-    });
-    currentDisplay.append(fragment);
+    fragment.append(createTaskElements(project.tasks, index));
   });
+
+  currentDisplay.append(fragment);
 }
 
 function toggleForm() {
@@ -159,7 +183,11 @@ function insertTask(e) {
   const dialog = document.getElementById("dialog");
   const form = new FormData(e.target);
   const taskData = Object.fromEntries(form);
-  projects[0].tasks.push(
+
+  const currentProject = document.querySelector("#currentDisplay > h2");
+  let index = currentProject.dataset.projectIndex;
+
+  projects[index].tasks.push(
     new Task(
       taskData.title,
       taskData.description,
@@ -168,6 +196,12 @@ function insertTask(e) {
       null
     )
   );
+
+  currentDisplay.append(
+    createTask(taskData, projects[index].tasks.length - 1, index)
+  );
   dialog.close();
   e.target.reset();
 }
+
+console.log(projects[0]);

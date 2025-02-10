@@ -21,35 +21,36 @@
         <ul id="projects">
             <li><button data-project-index="0" class="js-project-btn">Default</button></li>
         </ul>
-        <form action="" id="projectForm" class="hidden">
+        <form id="projectForm" class="hidden">
             <label for='projectInput'>Project Name</label>
-            <input type='text' name='title' required>
+            <input type='text' name='title' id="projectInput" required>
             <input type='submit' value='Submit'>
         </form>
         <button id="projectBtn">New Project</button>
     </nav>
     <main id="currentDisplay">
+        <h2 class="project-title" data-project-index="0"></h2>
         <div></div>
         <button id="addBtn">Add</button>
     </main>
     <dialog id="dialog">
-        <form action="" id="inputForm">
+        <form id="inputForm">
             <h2>New Task</h2>
             <div class="input-field">
                 <label for="name">Name</label>
-                <input type="text" name="title" id="name">
+                <input type="text" name="title" id="name" required>
             </div>
             <div class="input-field">
                 <label for="description">Description</label>
-                <textarea name="description" id="description"></textarea>
+                <textarea name="description" id="description" required></textarea>
             </div>
             <div class="input-field">
                 <label for="date">Date</label>
-                <input type="date" name="date" id="date">
+                <input type="date" name="date" id="date" required>
             </div>
             <div class="input-field">
                 <label for="priority">Priority</label>
-                <select name="priority" id="priority">
+                <select name="priority" id="priority" required>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
