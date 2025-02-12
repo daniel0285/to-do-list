@@ -71,13 +71,16 @@ export function displayAllTasks() {
 
 export function filterByProject(e) {
   const text = e.target.textContent;
-  const projectIndex = e.target.dataset.projectIndex;
-  changeHeaderContent(text, projectIndex);
+  const index = e.target.dataset.projectIndex;
+  changeHeaderContent(text, index);
 
   currentDisplay.innerHTML = "";
-  currentDisplay.append(
-    createTaskElements(projects[projectIndex].tasks, projectIndex)
-  );
+
+  if (projects[index].tasks.length === 0) {
+    currentDisplay.innerHTML = `<p>No task yet</p>`;
+  } else {
+    currentDisplay.append(createTaskElements(projects[index].tasks, index));
+  }
 }
 
 export function toggleForm() {

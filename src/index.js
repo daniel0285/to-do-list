@@ -77,7 +77,8 @@ function createNewProject(e) {
   const projectList = document.getElementById("projects");
 
   projects.push({ title: project.title, tasks: [] });
-  const index = project.length - 1;
+  const index = projects.length === 0 ? 1 : projects.length - 1;
+  console.log(projects);
 
   projectList.append(TDLDom.createProjectButton(project.title, index));
   TDLDom.toggleForm();
