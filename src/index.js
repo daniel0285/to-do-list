@@ -55,19 +55,19 @@ document.body.addEventListener("click", (e) => {
   }
 
   if (e.target.className === "js-project-btn") {
-    TDLDom.filterByProject(e);
+    TDLDom.filterByProject(e.target);
   }
 
   if (e.target.classList.contains("js-view")) {
-    TDLDom.viewTaskDetails(e);
+    TDLDom.viewTaskDetails(e.target);
   }
 
   if (e.target.classList.contains("js-close-btn")) {
-    TDLDom.closeModal(e);
+    TDLDom.closeModal(e.target);
   }
 
   if (e.target.classList.contains("js-delete")) {
-    console.log("delete");
+    TDLDom.deleteTask(e.target);
   }
 });
 

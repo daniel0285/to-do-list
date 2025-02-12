@@ -30,17 +30,6 @@ export function createTask(task, index, projectIndex) {
   return taskDiv;
 }
 
-function createTaskElements(tasks, index) {
-  const fragment = document.createDocumentFragment();
-  const projectIndex = index;
-
-  tasks.forEach((task, index) => {
-    fragment.append(createTask(task, index, projectIndex));
-  });
-
-  return fragment;
-}
-
 export function createProjectButton(title, index) {
   const list = document.createElement("li");
   const btn = document.createElement("button");
@@ -72,8 +61,8 @@ export function displayAllTasks() {
 }
 
 export function filterByProject(e) {
-  const text = e.target.textContent;
-  const index = e.target.dataset.projectIndex;
+  const text = e.textContent;
+  const index = e.dataset.projectIndex;
   changeHeaderContent(text, index);
 
   currentDisplay.innerHTML = "";
@@ -90,7 +79,7 @@ export function viewTaskDetails(e) {
   const viewDialog = document.getElementById("viewDialog");
   const content = document.querySelector("#viewDialog > div");
 
-  const task = getTaskID(e);
+  const task = getTask(e).details;
 
   content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
@@ -101,16 +90,36 @@ export function viewTaskDetails(e) {
   viewDialog.showModal();
 }
 
-function getTaskID(e) {
-  const taskTarget = e.target.closest("div").dataset.projectIndex.split("");
-  const PID = parseInt(taskTarget[0]);
-  const TID = parseInt(taskTarget[1]);
-
-  return projects[PID].tasks[TID];
-}
-
 export function closeModal(e) {
-  const targetModal = e.target.closest("dialog");
+  const targetModal = e.closest("dialog");
   targetModal.querySelector("div").innerHTML = "";
   targetModal.close();
+}
+
+export function deleteTask(e) {
+  const task = getTask(e);
+  const currentProject = e.closest("main").querySelector("h2");
+  const array = projects[task.PID].tasks;
+  array.length === 1 ? array.pop() : array.splice(task.TID, 1);
+  filterByProject(currentProject);
+}
+
+function getTask(e) {
+  const taskTarget = e.closest("div").dataset.projectIndex.split("");
+  const PID = parseInt(taskTarget[0]);
+  const TID = parseInt(taskTarget[1]);
+  const details = projects[PID].tasks[TID];
+
+  return { details, PID, TID };
+}
+
+function createTaskElements(tasks, index) {
+  const fragment = document.createDocumentFragment();
+  const projectIndex = index;
+
+  tasks.forEach((task, index) => {
+    fragment.append(createTask(task, index, projectIndex));
+  });
+
+  return fragment;
 }
