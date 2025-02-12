@@ -57,6 +57,14 @@ document.body.addEventListener("click", (e) => {
   if (e.target.className === "js-project-btn") {
     TDLDom.filterByProject(e);
   }
+
+  if (e.target.classList.contains("js-view")) {
+    TDLDom.viewTaskDetails(e);
+  }
+
+  if (e.target.classList.contains("js-close-btn")) {
+    TDLDom.closeModal(e);
+  }
 });
 
 document.body.addEventListener("submit", (e) => {

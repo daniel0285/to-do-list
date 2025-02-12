@@ -2,13 +2,12 @@ import { projects } from "./index";
 
 export const currentDisplay = document.querySelector("#currentDisplay > div");
 export const inputDialog = document.getElementById("inputDialog");
-export const viewDialog = document.getElementById("viewDialog");
 
 export function createTask(task, index, projectIndex) {
   const taskDiv = document.createElement("div");
   taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
-  taskDiv.id = index;
-  taskDiv.dataset.projectIndex = projectIndex;
+  // taskDiv.id = index;
+  taskDiv.dataset.projectIndex = `${projectIndex}${index}`;
 
   const status = document.createElement("p");
   const title = document.createElement("h3");
@@ -20,7 +19,7 @@ export function createTask(task, index, projectIndex) {
   status.textContent = task.status;
   title.textContent = task.title;
   date.textContent = task.date;
-  viewBtn.className = "btn view";
+  viewBtn.className = "btn js-view";
   viewBtn.textContent = "View";
   editBtn.className = "btn edit";
   editBtn.textContent = "Edit";
@@ -88,4 +87,28 @@ export function filterByProject(e) {
 export function toggleForm() {
   const projectForm = document.getElementById("projectForm");
   projectForm.classList.toggle("hidden");
+}
+
+export function viewTaskDetails(e) {
+  const viewDialog = document.getElementById("viewDialog");
+  const content = document.querySelector("#viewDialog > div");
+
+  const taskTarget = e.target.closest("div").dataset.projectIndex.split("");
+  const PID = parseInt(taskTarget[0]);
+  const TID = parseInt(taskTarget[1]);
+  const task = projects[PID].tasks[TID];
+
+  content.innerHTML = `<h3>${task.title}</h3>
+                       <p>${task.description}</p>
+                       <p>${task.date}</p>
+                       <p>${task.priority}</p>
+                       <p>${task.status}</p>`;
+
+  viewDialog.showModal();
+}
+
+export function closeModal(e) {
+  const targetModal = e.target.closest("dialog");
+  targetModal.querySelector("div").innerHTML = "";
+  targetModal.close();
 }
