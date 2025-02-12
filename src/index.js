@@ -65,6 +65,10 @@ document.body.addEventListener("click", (e) => {
   if (e.target.classList.contains("js-close-btn")) {
     TDLDom.closeModal(e);
   }
+
+  if (e.target.classList.contains("js-delete")) {
+    console.log("delete");
+  }
 });
 
 document.body.addEventListener("submit", (e) => {

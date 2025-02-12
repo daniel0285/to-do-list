@@ -21,9 +21,10 @@ export function createTask(task, index, projectIndex) {
   date.textContent = task.date;
   viewBtn.className = "btn js-view";
   viewBtn.textContent = "View";
-  editBtn.className = "btn edit";
+  editBtn.className = "btn js-edit";
   editBtn.textContent = "Edit";
   deleteBtn.textContent = "Delete";
+  deleteBtn.className = "btn js-delete";
 
   taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
   return taskDiv;
@@ -77,11 +78,7 @@ export function filterByProject(e) {
 
   currentDisplay.innerHTML = "";
 
-  if (projects[index].tasks.length === 0) {
-    currentDisplay.innerHTML = `<p>No task yet</p>`;
-  } else {
-    currentDisplay.append(createTaskElements(projects[index].tasks, index));
-  }
+  currentDisplay.append(createTaskElements(projects[index].tasks, index));
 }
 
 export function toggleForm() {
@@ -93,10 +90,7 @@ export function viewTaskDetails(e) {
   const viewDialog = document.getElementById("viewDialog");
   const content = document.querySelector("#viewDialog > div");
 
-  const taskTarget = e.target.closest("div").dataset.projectIndex.split("");
-  const PID = parseInt(taskTarget[0]);
-  const TID = parseInt(taskTarget[1]);
-  const task = projects[PID].tasks[TID];
+  const task = getTaskID(e);
 
   content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
@@ -105,6 +99,14 @@ export function viewTaskDetails(e) {
                        <p>${task.status}</p>`;
 
   viewDialog.showModal();
+}
+
+function getTaskID(e) {
+  const taskTarget = e.target.closest("div").dataset.projectIndex.split("");
+  const PID = parseInt(taskTarget[0]);
+  const TID = parseInt(taskTarget[1]);
+
+  return projects[PID].tasks[TID];
 }
 
 export function closeModal(e) {
