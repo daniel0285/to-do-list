@@ -71,9 +71,14 @@ document.body.addEventListener("submit", (e) => {
   }
 });
 
-function createNewProject(e) {
+function getFormData(e) {
   const form = new FormData(e.target);
-  const project = Object.fromEntries(form);
+  const data = Object.fromEntries(form);
+  return data;
+}
+
+function createNewProject(e) {
+  const project = getFormData(e);
   const projectList = document.getElementById("projects");
 
   projects.push({ title: project.title, tasks: [] });
@@ -86,8 +91,7 @@ function createNewProject(e) {
 }
 
 function insertTask(e) {
-  const form = new FormData(e.target);
-  const taskData = Object.fromEntries(form);
+  const taskData = getFormData(e);
 
   const currentProject = document.querySelector("#currentDisplay > h2");
   let index = currentProject.dataset.projectIndex;
