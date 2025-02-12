@@ -43,7 +43,7 @@ class Task {
 
 document.body.addEventListener("click", (e) => {
   if (e.target.id === "addBtn") {
-    dialog.showModal();
+    TDLDom.inputDialog.showModal();
   }
 
   if (e.target.id === "home") {
@@ -109,6 +109,6 @@ function insertTask(e) {
   currentDisplay.append(
     TDLDom.createTask(taskData, projects[index].tasks.length - 1, index)
   );
-  dialog.close();
+  TDLDom.inputDialog.close();
   e.target.reset();
 }

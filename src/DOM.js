@@ -1,6 +1,8 @@
 import { projects } from "./index";
 
-const currentDisplay = document.querySelector("#currentDisplay > div");
+export const currentDisplay = document.querySelector("#currentDisplay > div");
+export const inputDialog = document.getElementById("inputDialog");
+export const viewDialog = document.getElementById("viewDialog");
 
 export function createTask(task, index, projectIndex) {
   const taskDiv = document.createElement("div");
