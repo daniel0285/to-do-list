@@ -113,9 +113,9 @@ function insertTask(e) {
   const taskData = getFormData(e);
 
   const currentProject = document.querySelector("#currentDisplay > h2");
-  let index = currentProject.dataset.projectIndex;
+  const PID = currentProject.dataset.projectIndex;
 
-  projects[index].tasks.push(
+  projects[PID].tasks.push(
     new Task(
       taskData.title,
       taskData.description,
@@ -125,10 +125,8 @@ function insertTask(e) {
     )
   );
 
-  currentDisplay.append(
-    TDLDom.createTask(taskData, projects[index].tasks.length - 1, index)
-  );
-  TDLDom.inputDialog.close();
+  const TID = projects[PID].tasks.length === 0 ? 0 : projects[PID].tasks.length;
+  TDLDom.insertTaskNode(taskData, TID, PID);
   e.target.reset();
 }
 
@@ -141,4 +139,10 @@ function deleteTask(e) {
     : projectArray.splice(task.TID, 1);
 
   TDLDom.deleteTaskNode(e);
+}
+
+function deleteProject(target) {
+  const index = target.closest("li").dataset.projectIndex;
+  projects.length === 1 ? projects.pop() : projects.splice(index, 1);
+  TDLDom.removeProjectTasks(target);
 }

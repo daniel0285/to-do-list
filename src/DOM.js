@@ -31,6 +31,11 @@ export function createTask(task, index, projectIndex) {
   return taskDiv;
 }
 
+export function insertTaskNode(data, taskID, projectID) {
+  currentDisplay.append(createTask(data, taskID, projectID));
+  inputDialog.close();
+}
+
 export function createProjectButton(title, index) {
   const list = document.createElement("li");
   const btn = document.createElement("button");
@@ -47,13 +52,13 @@ export function createProjectButton(title, index) {
 }
 
 export function changeHeaderContent(text, index = 0) {
-  const projectTitle = document.querySelector(".project-title");
+  const projectTitle = document.querySelector(".js-project-title");
   projectTitle.innerText = text;
   projectTitle.dataset.projectIndex = index;
 }
 
 export function displayAllTasks() {
-  currentDisplay.innerHTML = "";
+  clearCurrentDisplay();
   const fragment = document.createDocumentFragment();
   changeHeaderContent("Home");
 
@@ -69,7 +74,7 @@ export function filterByProject(e) {
   const index = e.closest("li").dataset.projectIndex;
   changeHeaderContent(text, index);
 
-  currentDisplay.innerHTML = "";
+  clearCurrentDisplay();
   currentDisplay.append(createTaskElements(projects[index].tasks, index));
 }
 
@@ -112,8 +117,22 @@ export function deleteTaskNode(e) {
   e.closest("div").remove();
 }
 
-export function removeProjectButton(target) {
+export function removeProjectTasks(target) {
+  const PID = target.closest("li").dataset.projectIndex;
+  const currentProject =
+    document.querySelector(".js-project-title").dataset.projectIndex;
+  if (currentProject === PID) {
+    displayAllTasks();
+  }
+  removeProjectButton(target);
+}
+
+function removeProjectButton(target) {
   return target.closest("li").remove();
+}
+
+function clearCurrentDisplay() {
+  currentDisplay.innerHTML = "";
 }
 
 export function getTask(e) {
