@@ -1,12 +1,13 @@
 import { projects } from "./index";
 
-export const currentDisplay = document.querySelector("#currentDisplay > div");
+export const currentDisplay = document.querySelector(
+  "#currentDisplay > .project-tasks"
+);
 export const inputDialog = document.getElementById("inputDialog");
 
 export function createTask(task, index, projectIndex) {
   const taskDiv = document.createElement("div");
   taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
-  // taskDiv.id = index;
   taskDiv.dataset.projectIndex = `${projectIndex}${index}`;
 
   const status = document.createElement("p");
@@ -98,10 +99,20 @@ export function closeModal(e) {
 
 export function deleteTask(e) {
   const task = getTask(e);
-  const currentProject = e.closest("main").querySelector("h2");
-  const array = projects[task.PID].tasks;
-  array.length === 1 ? array.pop() : array.splice(task.TID, 1);
-  filterByProject(currentProject);
+  const projectTasks = e
+    .closest("main")
+    .querySelectorAll("#currentDisplay > .project-tasks > .task-item");
+
+  const projectArray = projects[task.PID].tasks;
+  projectArray.length === 1
+    ? projectArray.pop()
+    : projectArray.splice(task.TID, 1);
+
+  projectTasks.forEach((el, index) => {
+    const TID = index === 0 ? index : index - 1;
+    el.dataset.projectIndex = `${task.PID}${TID}`;
+  });
+  e.closest("div").remove();
 }
 
 function getTask(e) {

@@ -62,6 +62,10 @@ document.body.addEventListener("click", (e) => {
     TDLDom.viewTaskDetails(e.target);
   }
 
+  if (e.target.classList.contains("js-edit")) {
+    console.log("edit");
+  }
+
   if (e.target.classList.contains("js-close-btn")) {
     TDLDom.closeModal(e.target);
   }
