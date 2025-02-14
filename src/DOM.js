@@ -34,11 +34,14 @@ export function createTask(task, index, projectIndex) {
 export function createProjectButton(title, index) {
   const list = document.createElement("li");
   const btn = document.createElement("button");
+  const deleteBtn = document.createElement("button");
 
   btn.innerText = title;
-  btn.dataset.projectIndex = index;
+  list.dataset.projectIndex = index;
   btn.className = "js-project-btn";
-  list.append(btn);
+  deleteBtn.innerText = "X";
+  deleteBtn.className = "js-delete-project";
+  list.append(btn, deleteBtn);
 
   return list;
 }
@@ -63,11 +66,10 @@ export function displayAllTasks() {
 
 export function filterByProject(e) {
   const text = e.textContent;
-  const index = e.dataset.projectIndex;
+  const index = e.closest("li").dataset.projectIndex;
   changeHeaderContent(text, index);
 
   currentDisplay.innerHTML = "";
-
   currentDisplay.append(createTaskElements(projects[index].tasks, index));
 }
 
@@ -97,16 +99,11 @@ export function closeModal(e) {
   targetModal.close();
 }
 
-export function deleteTask(e) {
+export function deleteTaskNode(e) {
   const task = getTask(e);
   const projectTasks = e
     .closest("main")
     .querySelectorAll("#currentDisplay > .project-tasks > .task-item");
-
-  const projectArray = projects[task.PID].tasks;
-  projectArray.length === 1
-    ? projectArray.pop()
-    : projectArray.splice(task.TID, 1);
 
   projectTasks.forEach((el, index) => {
     const TID = index === 0 ? index : index - 1;
@@ -115,7 +112,11 @@ export function deleteTask(e) {
   e.closest("div").remove();
 }
 
-function getTask(e) {
+export function removeProjectButton(target) {
+  return target.closest("li").remove();
+}
+
+export function getTask(e) {
   const taskTarget = e.closest("div").dataset.projectIndex.split("");
   const PID = parseInt(taskTarget[0]);
   const TID = parseInt(taskTarget[1]);

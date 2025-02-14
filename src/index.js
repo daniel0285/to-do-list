@@ -71,7 +71,11 @@ document.body.addEventListener("click", (e) => {
   }
 
   if (e.target.classList.contains("js-delete")) {
-    TDLDom.deleteTask(e.target);
+    deleteTask(e.target);
+  }
+
+  if (e.target.classList.contains("js-delete-project")) {
+    deleteProject(e.target);
   }
 });
 
@@ -98,8 +102,7 @@ function createNewProject(e) {
   const projectList = document.getElementById("projects");
 
   projects.push({ title: project.title, tasks: [] });
-  const index = projects.length === 0 ? 1 : projects.length - 1;
-  console.log(projects);
+  const index = projects.length === 0 ? 0 : projects.length - 1;
 
   projectList.append(TDLDom.createProjectButton(project.title, index));
   TDLDom.toggleForm();
@@ -127,4 +130,15 @@ function insertTask(e) {
   );
   TDLDom.inputDialog.close();
   e.target.reset();
+}
+
+function deleteTask(e) {
+  const task = TDLDom.getTask(e);
+
+  const projectArray = projects[task.PID].tasks;
+  projectArray.length === 1
+    ? projectArray.pop()
+    : projectArray.splice(task.TID, 1);
+
+  TDLDom.deleteTaskNode(e);
 }
