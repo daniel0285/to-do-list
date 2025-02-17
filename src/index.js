@@ -97,6 +97,10 @@ document.body.addEventListener("submit", (e) => {
   if (e.target.id === "projectForm") {
     createNewProject(e.target);
   }
+
+  if (e.target.id === "editForm") {
+    editTaskDetails(e.target);
+  }
 });
 
 function getFormData(target) {
@@ -159,7 +163,21 @@ function deleteProject(target) {
 }
 
 function editTaskDetails(target) {
-  const task = TDLDom.getTaskAttribute(target);
+  const data = getFormData(target);
+  const currentData = projects[data.PID].tasks[data.TID];
 
-  console.log(task);
+  currentData.title = data.title;
+  currentData.description = data.description;
+  currentData.date = data.date;
+  currentData.priority = data.priority;
+  currentData.status = data.status;
+
+  console.log(currentData);
 }
+// {
+//   title: "Task #1",
+//   description: "Description Here",
+//   date: "2025-02-19",
+//   priority: "High",
+//   status: "Not Finished",
+// },
