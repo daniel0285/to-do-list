@@ -103,6 +103,19 @@ export function viewTaskDetails(target) {
 export function closeModal(target) {
   const targetModal = target.closest("dialog");
   targetModal.close();
+
+  if (targetModal.querySelector("form")) {
+    resetForm(targetModal);
+  }
+}
+
+function resetForm(target) {
+  target.querySelector("form").reset();
+
+  if (target.querySelector(".IDs")) {
+    target.querySelector("input#PID").value = "";
+    target.querySelector("input#TID").value = "";
+  }
 }
 
 export function deleteTaskNode(target) {
