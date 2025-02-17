@@ -33,6 +33,17 @@ export function createTask(task, index, projectIndex) {
   return taskDiv;
 }
 
+function createTaskElements(tasks, index) {
+  const fragment = document.createDocumentFragment();
+  const projectIndex = index;
+
+  tasks.forEach((task, index) => {
+    fragment.append(createTask(task, index, projectIndex));
+  });
+
+  return fragment;
+}
+
 export function insertTaskNode(data, taskID, projectID) {
   currentDisplay.append(createTask(data, taskID, projectID));
   inputDialog.close();
@@ -137,16 +148,23 @@ export function openEditDialog(target) {
   const title = editDialog.querySelector("#title");
   const description = editDialog.querySelector("#description");
   const date = editDialog.querySelector("#date");
-  const priority = editDialog.querySelector("#priority");
+  const priority = editDialog.querySelector(
+    `#priority > option[value=${task.details.priority}]`
+  );
 
   taskID.value = task.TID;
   projectID.value = task.PID;
   title.value = task.details.title;
   description.value = task.details.description;
   date.value = task.details.date;
-  priority.value = task.details.priority || "Medium";
+  priority.selected = true;
 
   editDialog.showModal();
+}
+
+function selectElement(id, valueToSelect) {
+  let element = document.getElementById(id);
+  element.value = valueToSelect;
 }
 
 export function removeProjectTasks(target) {
@@ -174,15 +192,4 @@ export function getTaskAttribute(target) {
   const details = projects[PID].tasks[TID];
 
   return { details, PID, TID };
-}
-
-function createTaskElements(tasks, index) {
-  const fragment = document.createDocumentFragment();
-  const projectIndex = index;
-
-  tasks.forEach((task, index) => {
-    fragment.append(createTask(task, index, projectIndex));
-  });
-
-  return fragment;
 }
