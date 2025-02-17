@@ -37,8 +37,41 @@
         <form id="inputForm">
             <h2>New Task</h2>
             <div class="input-field">
-                <label for="name">Name</label>
+                <label for="name">Title</label>
                 <input type="text" name="title" id="name" required>
+            </div>
+            <div class="input-field">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" required></textarea>
+            </div>
+            <div class="input-field">
+                <label for="date">Date</label>
+                <input type="date" name="date" id="date" required>
+            </div>
+            <div class="input-field">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <input type="submit" id="submit">
+            <button class="js-close-btn">Cancel</button>
+
+        </form>
+    </dialog>
+    <dialog id="editDialog">
+        <form id="editForm">
+            <h2>Edit Task Details</h2>
+            <div class="IDs">
+                <input type="hidden" name="TID" id="TID">
+                <input type="hidden" name="PID" id="PID">
+            </div>
+
+            <div class="input-field">
+                <label for="title">Name</label>
+                <input type="text" name="title" id="title" required>
             </div>
             <div class="input-field">
                 <label for="description">Description</label>
@@ -57,6 +90,7 @@
                 </select>
             </div>
             <input type="submit" id="submit">
+            <button class="js-close-btn">Cancel</button>
         </form>
     </dialog>
     <dialog id="viewDialog">

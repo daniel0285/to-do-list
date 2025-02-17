@@ -9,22 +9,29 @@ export const projects = [
       {
         title: "Task #1",
         description: "Description Here",
-        date: "Today",
-        priority: "Important",
+        date: "2025-02-19",
+        priority: "High",
         status: "Not Finished",
       },
       {
         title: "Task #2",
         description: "Description Here",
-        date: "Today",
-        priority: "Important",
+        date: "2025-02-19",
+        priority: "Low",
         status: "Not Finished",
       },
       {
         title: "Task #3",
         description: "Description Here",
-        date: "Today",
-        priority: "Important",
+        date: "2025-02-19",
+        priority: "Medium",
+        status: "Not Finished",
+      },
+      {
+        title: "Task #4",
+        description: "Description Here",
+        date: "2025-02-19",
+        priority: "Medium",
         status: "Not Finished",
       },
     ],
@@ -63,7 +70,7 @@ document.body.addEventListener("click", (e) => {
   }
 
   if (e.target.classList.contains("js-edit")) {
-    console.log("edit");
+    TDLDom.openEditDialog(e.target);
   }
 
   if (e.target.classList.contains("js-close-btn")) {
@@ -72,6 +79,7 @@ document.body.addEventListener("click", (e) => {
 
   if (e.target.classList.contains("js-delete")) {
     deleteTask(e.target);
+    console.log(projects);
   }
 
   if (e.target.classList.contains("js-delete-project")) {
@@ -83,22 +91,22 @@ document.body.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (e.target.id === "inputForm") {
-    insertTask(e);
+    insertTask(e.target);
   }
 
   if (e.target.id === "projectForm") {
-    createNewProject(e);
+    createNewProject(e.target);
   }
 });
 
-function getFormData(e) {
-  const form = new FormData(e.target);
+function getFormData(target) {
+  const form = new FormData(target);
   const data = Object.fromEntries(form);
   return data;
 }
 
-function createNewProject(e) {
-  const project = getFormData(e);
+function createNewProject(target) {
+  const project = getFormData(target);
   const projectList = document.getElementById("projects");
 
   projects.push({ title: project.title, tasks: [] });
@@ -106,11 +114,11 @@ function createNewProject(e) {
 
   projectList.append(TDLDom.createProjectButton(project.title, index));
   TDLDom.toggleForm();
-  e.target.reset();
+  target.reset();
 }
 
-function insertTask(e) {
-  const taskData = getFormData(e);
+function insertTask(target) {
+  const taskData = getFormData(target);
 
   const currentProject = document.querySelector("#currentDisplay > h2");
   const PID = currentProject.dataset.projectIndex;
@@ -125,24 +133,33 @@ function insertTask(e) {
     )
   );
 
-  const TID = projects[PID].tasks.length === 0 ? 0 : projects[PID].tasks.length;
+  const TID =
+    projects[PID].tasks.length !== 0 ? projects[PID].tasks.length - 1 : 0;
+
   TDLDom.insertTaskNode(taskData, TID, PID);
-  e.target.reset();
+  target.reset();
+  console.log(projects);
 }
 
-function deleteTask(e) {
-  const task = TDLDom.getTask(e);
+function deleteTask(target) {
+  const task = TDLDom.getTaskAttribute(target);
 
   const projectArray = projects[task.PID].tasks;
   projectArray.length === 1
     ? projectArray.pop()
     : projectArray.splice(task.TID, 1);
 
-  TDLDom.deleteTaskNode(e);
+  TDLDom.deleteTaskNode(target);
 }
 
 function deleteProject(target) {
   const index = target.closest("li").dataset.projectIndex;
   projects.length === 1 ? projects.pop() : projects.splice(index, 1);
   TDLDom.removeProjectTasks(target);
+}
+
+function editTaskDetails(target) {
+  const task = TDLDom.getTaskAttribute(target);
+
+  console.log(task);
 }

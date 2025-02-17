@@ -4,20 +4,22 @@ export const currentDisplay = document.querySelector(
   "#currentDisplay > .project-tasks"
 );
 export const inputDialog = document.getElementById("inputDialog");
+const editDialog = document.getElementById("editDialog");
 
 export function createTask(task, index, projectIndex) {
   const taskDiv = document.createElement("div");
   taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
-  taskDiv.dataset.projectIndex = `${projectIndex}${index}`;
+  taskDiv.dataset.projectIndex = `${projectIndex}-${index}`;
 
-  const status = document.createElement("p");
+  const status = document.createElement("input");
   const title = document.createElement("h3");
   const date = document.createElement("p");
   const viewBtn = document.createElement("button");
   const editBtn = document.createElement("button");
   const deleteBtn = document.createElement("button");
 
-  status.textContent = task.status;
+  status.setAttribute("type", "checkbox");
+  status.className = "status-checkbox";
   title.textContent = task.title;
   date.textContent = task.date;
   viewBtn.className = "btn js-view";
@@ -69,9 +71,9 @@ export function displayAllTasks() {
   currentDisplay.append(fragment);
 }
 
-export function filterByProject(e) {
-  const text = e.textContent;
-  const index = e.closest("li").dataset.projectIndex;
+export function filterByProject(target) {
+  const text = target.textContent;
+  const index = target.closest("li").dataset.projectIndex;
   changeHeaderContent(text, index);
 
   clearCurrentDisplay();
@@ -83,11 +85,11 @@ export function toggleForm() {
   projectForm.classList.toggle("hidden");
 }
 
-export function viewTaskDetails(e) {
+export function viewTaskDetails(target) {
   const viewDialog = document.getElementById("viewDialog");
   const content = document.querySelector("#viewDialog > div");
 
-  const task = getTask(e).details;
+  const task = getTaskAttribute(target).details;
 
   content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
@@ -98,23 +100,40 @@ export function viewTaskDetails(e) {
   viewDialog.showModal();
 }
 
-export function closeModal(e) {
-  const targetModal = e.closest("dialog");
-  targetModal.querySelector("div").innerHTML = "";
+export function closeModal(target) {
+  const targetModal = target.closest("dialog");
   targetModal.close();
 }
 
-export function deleteTaskNode(e) {
-  const task = getTask(e);
-  const projectTasks = e
-    .closest("main")
-    .querySelectorAll("#currentDisplay > .project-tasks > .task-item");
-
+export function deleteTaskNode(target) {
+  const task = getTaskAttribute(target);
+  target.closest("div").remove();
+  const projectTasks = document.querySelectorAll(
+    "#currentDisplay > .project-tasks > .task-item"
+  );
   projectTasks.forEach((el, index) => {
-    const TID = index === 0 ? index : index - 1;
-    el.dataset.projectIndex = `${task.PID}${TID}`;
+    el.dataset.projectIndex = `${task.PID}-${index}`;
   });
-  e.closest("div").remove();
+}
+
+export function openEditDialog(target) {
+  const task = getTaskAttribute(target);
+
+  const taskID = editDialog.querySelector("#TID");
+  const projectID = editDialog.querySelector("#PID");
+  const title = editDialog.querySelector("#title");
+  const description = editDialog.querySelector("#description");
+  const date = editDialog.querySelector("#date");
+  const priority = editDialog.querySelector("#priority");
+
+  taskID.value = task.TID;
+  projectID.value = task.PID;
+  title.value = task.details.title;
+  description.value = task.details.description;
+  date.value = task.details.date;
+  priority.value = task.details.priority || "Medium";
+
+  editDialog.showModal();
 }
 
 export function removeProjectTasks(target) {
@@ -135,8 +154,8 @@ function clearCurrentDisplay() {
   currentDisplay.innerHTML = "";
 }
 
-export function getTask(e) {
-  const taskTarget = e.closest("div").dataset.projectIndex.split("");
+export function getTaskAttribute(target) {
+  const taskTarget = target.closest("div").dataset.projectIndex.split("-");
   const PID = parseInt(taskTarget[0]);
   const TID = parseInt(taskTarget[1]);
   const details = projects[PID].tasks[TID];
