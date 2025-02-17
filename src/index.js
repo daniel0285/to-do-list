@@ -163,21 +163,14 @@ function deleteProject(target) {
 }
 
 function editTaskDetails(target) {
-  const data = getFormData(target);
-  const currentData = projects[data.PID].tasks[data.TID];
+  const formData = getFormData(target);
+  const currentTask = projects[formData.PID].tasks[formData.TID];
 
-  currentData.title = data.title;
-  currentData.description = data.description;
-  currentData.date = data.date;
-  currentData.priority = data.priority;
-  currentData.status = data.status;
+  currentTask.title = formData.title;
+  currentTask.description = formData.description;
+  currentTask.date = formData.date;
+  currentTask.priority = formData.priority;
 
-  console.log(currentData);
+  TDLDom.closeModal(target);
+  TDLDom.updateTaskNode(formData);
 }
-// {
-//   title: "Task #1",
-//   description: "Description Here",
-//   date: "2025-02-19",
-//   priority: "High",
-//   status: "Not Finished",
-// },

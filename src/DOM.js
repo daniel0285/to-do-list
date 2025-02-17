@@ -142,7 +142,11 @@ export function deleteTaskNode(target) {
 
 export function openEditDialog(target) {
   const task = getTaskAttribute(target);
+  populateEditForm(task);
+  editDialog.showModal();
+}
 
+function populateEditForm(task) {
   const taskID = editDialog.querySelector("#TID");
   const projectID = editDialog.querySelector("#PID");
   const title = editDialog.querySelector("#title");
@@ -158,13 +162,14 @@ export function openEditDialog(target) {
   description.value = task.details.description;
   date.value = task.details.date;
   priority.selected = true;
-
-  editDialog.showModal();
 }
 
-function selectElement(id, valueToSelect) {
-  let element = document.getElementById(id);
-  element.value = valueToSelect;
+export function updateTaskNode(data) {
+  const currentTaskNode = document.querySelector(
+    `div[data-project-index="${data.PID}-${data.TID}"]`
+  );
+  const editedTaskNode = createTask(data, data.TID, data.PID);
+  currentTaskNode.replaceWith(editedTaskNode);
 }
 
 export function removeProjectTasks(target) {
