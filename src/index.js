@@ -103,6 +103,12 @@ document.body.addEventListener("submit", (e) => {
   }
 });
 
+document.body.addEventListener("change", (e) => {
+  if (e.target.className === "status-checkbox") {
+    updateTaskStatus(e.target);
+  }
+});
+
 function getFormData(target) {
   const form = new FormData(target);
   const data = Object.fromEntries(form);
@@ -160,6 +166,20 @@ function deleteProject(target) {
   const index = target.closest("li").dataset.projectIndex;
   projects.length === 1 ? projects.pop() : projects.splice(index, 1);
   TDLDom.removeProjectTasks(target);
+}
+
+function updateTaskStatus(target) {
+  const targetTask = target.closest("div");
+  const data = TDLDom.getTaskAttribute(target);
+  const currentTaskData = projects[data.PID].tasks[data.TID];
+
+  if (targetTask.classList.contains("complete")) {
+    targetTask.classList.remove("complete");
+    currentTaskData.status = "Incomplete";
+  } else {
+    targetTask.classList.add("complete");
+    currentTaskData.status = "Complete";
+  }
 }
 
 function editTaskDetails(target) {
