@@ -1,6 +1,7 @@
 "use strict";
 import "./styles.scss";
 import * as TDLDom from "./DOM";
+import { CONSTANTS } from "./constants";
 
 export const projects = [
   {
@@ -49,40 +50,40 @@ class Task {
 }
 
 document.body.addEventListener("click", (e) => {
-  if (e.target.id === "addBtn") {
+  if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
     TDLDom.inputDialog.showModal();
   }
 
-  if (e.target.id === "home") {
+  if (e.target.id === CONSTANTS.BUTTON_IDS.HOME) {
     TDLDom.displayAllTasks();
   }
 
-  if (e.target.id === "projectBtn") {
+  if (e.target.id === CONSTANTS.BUTTON_IDS.PROJECT) {
     TDLDom.toggleForm();
   }
 
-  if (e.target.className === "js-project-btn") {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.PROJECT_BTN)) {
     TDLDom.filterByProject(e.target);
   }
 
-  if (e.target.classList.contains("js-view")) {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.VIEW)) {
     TDLDom.viewTaskDetails(e.target);
   }
 
-  if (e.target.classList.contains("js-edit")) {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.EDIT)) {
     TDLDom.openEditDialog(e.target);
   }
 
-  if (e.target.classList.contains("js-close-btn")) {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.CLOSE)) {
     TDLDom.closeModal(e.target);
   }
 
-  if (e.target.classList.contains("js-delete")) {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.DELETE)) {
     deleteTask(e.target);
     console.log(projects);
   }
 
-  if (e.target.classList.contains("js-delete-project")) {
+  if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.DELETE_PROJECT)) {
     deleteProject(e.target);
   }
 });
@@ -90,21 +91,21 @@ document.body.addEventListener("click", (e) => {
 document.body.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  if (e.target.id === "inputForm") {
+  if (e.target.id === CONSTANTS.FORM_IDS.INPUT) {
     insertTask(e.target);
   }
 
-  if (e.target.id === "projectForm") {
+  if (e.target.id === CONSTANTS.FORM_IDS.PROJECT) {
     createNewProject(e.target);
   }
 
-  if (e.target.id === "editForm") {
+  if (e.target.id === CONSTANTS.FORM_IDS.EDIT) {
     editTaskDetails(e.target);
   }
 });
 
 document.body.addEventListener("change", (e) => {
-  if (e.target.className === "status-checkbox") {
+  if (e.target.className === CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX) {
     updateTaskStatus(e.target);
   }
 });
@@ -139,7 +140,7 @@ function insertTask(target) {
       taskData.description,
       taskData.date,
       taskData.priority,
-      null
+      CONSTANTS.STATUS.INCOMPLETE
     )
   );
 
@@ -173,12 +174,12 @@ function updateTaskStatus(target) {
   const data = TDLDom.getTaskAttribute(target);
   const currentTaskData = projects[data.PID].tasks[data.TID];
 
-  if (targetTask.classList.contains("complete")) {
-    targetTask.classList.remove("complete");
-    currentTaskData.status = "Incomplete";
+  targetTask.classList.toggle(CONSTANTS.CLASS_NAMES.COMPLETE);
+
+  if (targetTask.classList.contains(CONSTANTS.CLASS_NAMES.COMPLETE)) {
+    currentTaskData.status = CONSTANTS.STATUS.INCOMPLETE;
   } else {
-    targetTask.classList.add("complete");
-    currentTaskData.status = "Complete";
+    currentTaskData.status = CONSTANTS.STATUS.INCOMPLETE;
   }
 }
 
@@ -194,3 +195,4 @@ function editTaskDetails(target) {
   TDLDom.closeModal(target);
   TDLDom.updateTaskNode(formData);
 }
+console.log(CONSTANTS);
