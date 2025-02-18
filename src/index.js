@@ -195,4 +195,3 @@ function editTaskDetails(target) {
   TDLDom.closeModal(target);
   TDLDom.updateTaskNode(formData);
 }
-console.log(CONSTANTS);

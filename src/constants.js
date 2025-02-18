@@ -8,6 +8,12 @@ export const CONSTANTS = {
     INCOMPLETE: "Incomplete",
     COMPLETE: "Complete",
   },
+  TEXT: {
+    VIEW: "view",
+    EDIT: "edit",
+    DELETE: "delete",
+    DELETE_ICON: "✕",
+  },
   BUTTON_IDS: {
     ADD: "addBtn",
     HOME: "home",

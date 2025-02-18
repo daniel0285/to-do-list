@@ -1,4 +1,5 @@
 import { projects } from "./index";
+import { CONSTANTS } from "./constants";
 
 export const currentDisplay = document.querySelector(
   "#currentDisplay > .project-tasks"
@@ -19,15 +20,15 @@ export function createTask(task, index, projectIndex) {
   const deleteBtn = document.createElement("button");
 
   status.setAttribute("type", "checkbox");
-  status.className = "status-checkbox";
+  status.className = CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX;
   title.textContent = task.title;
   date.textContent = task.date;
-  viewBtn.className = "btn js-view";
-  viewBtn.textContent = "View";
-  editBtn.className = "btn js-edit";
-  editBtn.textContent = "Edit";
-  deleteBtn.textContent = "Delete";
-  deleteBtn.className = "btn js-delete";
+  viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
+  viewBtn.textContent = CONSTANTS.TEXT.VIEW;
+  editBtn.className = `btn ${CONSTANTS.CLASS_NAMES.EDIT}`;
+  editBtn.textContent = CONSTANTS.TEXT.EDIT;
+  deleteBtn.textContent = CONSTANTS.TEXT.DELETE;
+  deleteBtn.className = `btn ${CONSTANTS.CLASS_NAMES.DELETE}`;
 
   taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
   return taskDiv;
@@ -56,9 +57,9 @@ export function createProjectButton(title, index) {
 
   btn.innerText = title;
   list.dataset.projectIndex = index;
-  btn.className = "js-project-btn";
-  deleteBtn.innerText = "X";
-  deleteBtn.className = "js-delete-project";
+  btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
+  deleteBtn.innerText = CONSTANTS.TEXT.DELETE_ICON;
+  deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
   list.append(btn, deleteBtn);
 
   return list;
