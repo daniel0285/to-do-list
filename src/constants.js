@@ -9,10 +9,11 @@ export const CONSTANTS = {
     COMPLETE: "Complete",
   },
   TEXT: {
-    VIEW: "view",
-    EDIT: "edit",
-    DELETE: "delete",
+    VIEW: "View",
+    EDIT: "Edit",
+    DELETE: "Delete",
     DELETE_ICON: "✕",
+    HOME: "Home",
   },
   BUTTON_IDS: {
     ADD: "addBtn",

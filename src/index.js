@@ -2,6 +2,7 @@
 import "./styles.scss";
 import * as TDLDom from "./DOM";
 import { CONSTANTS } from "./constants";
+import { format } from "date-fns";
 
 export const projects = [
   {
@@ -10,28 +11,28 @@ export const projects = [
       {
         title: "Task #1",
         description: "Description Here",
-        date: "2025-02-19",
+        date: "02-19-2025",
         priority: "High",
         status: "Not Finished",
       },
       {
         title: "Task #2",
         description: "Description Here",
-        date: "2025-02-19",
+        date: "02-19-2025",
         priority: "Low",
         status: "Not Finished",
       },
       {
         title: "Task #3",
         description: "Description Here",
-        date: "2025-02-19",
+        date: "02-19-2025",
         priority: "Medium",
         status: "Not Finished",
       },
       {
         title: "Task #4",
         description: "Description Here",
-        date: "2025-02-19",
+        date: "02-19-2025",
         priority: "Medium",
         status: "Not Finished",
       },
@@ -134,11 +135,14 @@ function insertTask(target) {
   const currentProject = document.querySelector("#currentDisplay > h2");
   const PID = currentProject.dataset.projectIndex;
 
+  const [year, month, day] = taskData.date.split("-");
+  const formattedDate = format(new Date(year, month - 1, day), "MM-dd-yyyy");
+
   projects[PID].tasks.push(
     new Task(
       taskData.title,
       taskData.description,
-      taskData.date,
+      formattedDate,
       taskData.priority,
       CONSTANTS.STATUS.INCOMPLETE
     )
@@ -147,7 +151,7 @@ function insertTask(target) {
   const TID =
     projects[PID].tasks.length !== 0 ? projects[PID].tasks.length - 1 : 0;
 
-  TDLDom.insertTaskNode(taskData, TID, PID);
+  TDLDom.insertTaskNode(projects[PID].tasks[TID], TID, PID);
   target.reset();
   console.log(projects);
 }
@@ -176,16 +180,22 @@ function updateTaskStatus(target) {
 
   targetTask.classList.toggle(CONSTANTS.CLASS_NAMES.COMPLETE);
 
-  if (targetTask.classList.contains(CONSTANTS.CLASS_NAMES.COMPLETE)) {
-    currentTaskData.status = CONSTANTS.STATUS.INCOMPLETE;
-  } else {
-    currentTaskData.status = CONSTANTS.STATUS.INCOMPLETE;
-  }
+  currentTaskData.status = targetTask.classList.contains(
+    CONSTANTS.CLASS_NAMES.COMPLETE
+  )
+    ? CONSTANTS.STATUS.COMPLETE
+    : CONSTANTS.STATUS.INCOMPLETE;
+
+  console.log(currentTaskData);
 }
 
 function editTaskDetails(target) {
   const formData = getFormData(target);
   const currentTask = projects[formData.PID].tasks[formData.TID];
+
+  const [year, month, day] = formData.date.split("-");
+  const formattedDate = format(new Date(year, month - 1, day), "MM-dd-yyyy");
+  formData.date = formattedDate;
 
   currentTask.title = formData.title;
   currentTask.description = formData.description;

@@ -1,5 +1,6 @@
 import { projects } from "./index";
 import { CONSTANTS } from "./constants";
+import { format } from "date-fns";
 
 export const currentDisplay = document.querySelector(
   "#currentDisplay > .project-tasks"
@@ -19,10 +20,13 @@ export function createTask(task, index, projectIndex) {
   const editBtn = document.createElement("button");
   const deleteBtn = document.createElement("button");
 
+  const [month, day, year] = task.date.split("-");
+  const formattedDate = format(new Date(year, month - 1, day), "MMM dd, yyyy");
+
   status.setAttribute("type", "checkbox");
   status.className = CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX;
   title.textContent = task.title;
-  date.textContent = task.date;
+  date.textContent = formattedDate;
   viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
   viewBtn.textContent = CONSTANTS.TEXT.VIEW;
   editBtn.className = `btn ${CONSTANTS.CLASS_NAMES.EDIT}`;
@@ -103,9 +107,12 @@ export function viewTaskDetails(target) {
 
   const task = getTaskAttribute(target).details;
 
+  const [month, day, year] = task.date.split("-");
+  const formattedDate = format(new Date(year, month - 1, day), "MMM dd, yyyy");
+
   content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
-                       <p>${task.date}</p>
+                       <p>${formattedDate}</p>
                        <p>${task.priority}</p>
                        <p>${task.status}</p>`;
 
@@ -157,11 +164,14 @@ function populateEditForm(task) {
     `#priority > option[value=${task.details.priority}]`
   );
 
+  const [month, day, year] = task.details.date.split("-");
+  const formattedDate = format(new Date(year, month - 1, day), "yyyy-MM-dd");
+
   taskID.value = task.TID;
   projectID.value = task.PID;
   title.value = task.details.title;
   description.value = task.details.description;
-  date.value = task.details.date;
+  date.value = formattedDate;
   priority.selected = true;
 }
 
