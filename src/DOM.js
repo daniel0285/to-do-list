@@ -8,204 +8,214 @@ export const currentDisplay = document.querySelector(
 export const inputDialog = document.getElementById("inputDialog");
 const editDialog = document.getElementById("editDialog");
 
-export function createTask(task, index, projectIndex) {
-  const taskDiv = document.createElement("div");
-  taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
-  taskDiv.dataset.projectIndex = `${projectIndex}-${index}`;
+export class TDLDom {
+  static createTask(task, index, projectIndex) {
+    const taskDiv = document.createElement("div");
+    taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
+    taskDiv.dataset.projectIndex = `${projectIndex}-${index}`;
 
-  const status = document.createElement("input");
-  const title = document.createElement("h3");
-  const date = document.createElement("p");
-  const viewBtn = document.createElement("button");
-  const editBtn = document.createElement("button");
-  const deleteBtn = document.createElement("button");
+    const status = document.createElement("input");
+    const title = document.createElement("h3");
+    const date = document.createElement("p");
+    const viewBtn = document.createElement("button");
+    const editBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
 
-  const [month, day, year] = task.date.split("-");
-  const formattedDate = format(new Date(year, month - 1, day), "MMM dd, yyyy");
+    const [month, day, year] = task.date.split("-");
+    const formattedDate = format(
+      new Date(year, month - 1, day),
+      "MMM dd, yyyy"
+    );
 
-  status.setAttribute("type", "checkbox");
-  status.className = CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX;
-  title.textContent = task.title;
-  date.textContent = formattedDate;
-  viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
-  viewBtn.textContent = CONSTANTS.TEXT.VIEW;
-  editBtn.className = `btn ${CONSTANTS.CLASS_NAMES.EDIT}`;
-  editBtn.textContent = CONSTANTS.TEXT.EDIT;
-  deleteBtn.textContent = CONSTANTS.TEXT.DELETE;
-  deleteBtn.className = `btn ${CONSTANTS.CLASS_NAMES.DELETE}`;
+    status.setAttribute("type", "checkbox");
+    status.className = CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX;
+    title.textContent = task.title;
+    date.textContent = formattedDate;
+    viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
+    viewBtn.textContent = CONSTANTS.TEXT.VIEW;
+    editBtn.className = `btn ${CONSTANTS.CLASS_NAMES.EDIT}`;
+    editBtn.textContent = CONSTANTS.TEXT.EDIT;
+    deleteBtn.textContent = CONSTANTS.TEXT.DELETE;
+    deleteBtn.className = `btn ${CONSTANTS.CLASS_NAMES.DELETE}`;
 
-  taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
-  return taskDiv;
-}
+    taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
+    return taskDiv;
+  }
 
-function createTaskElements(tasks, index) {
-  const fragment = document.createDocumentFragment();
-  const projectIndex = index;
+  static createTaskElements(tasks, index) {
+    const fragment = document.createDocumentFragment();
+    const projectIndex = index;
 
-  tasks.forEach((task, index) => {
-    fragment.append(createTask(task, index, projectIndex));
-  });
+    tasks.forEach((task, index) => {
+      fragment.append(this.createTask(task, index, projectIndex));
+    });
 
-  return fragment;
-}
+    return fragment;
+  }
 
-export function insertTaskNode(data, taskID, projectID) {
-  currentDisplay.append(createTask(data, taskID, projectID));
-  inputDialog.close();
-}
+  static insertTaskNode(data, taskID, projectID) {
+    currentDisplay.append(this.createTask(data, taskID, projectID));
+    inputDialog.close();
+  }
 
-export function createProjectButton(title, index) {
-  const list = document.createElement("li");
-  const btn = document.createElement("button");
-  const deleteBtn = document.createElement("button");
+  static createProjectButton(title, index) {
+    const list = document.createElement("li");
+    const btn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
 
-  btn.innerText = title;
-  list.dataset.projectIndex = index;
-  btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
-  deleteBtn.innerText = CONSTANTS.TEXT.DELETE_ICON;
-  deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
-  list.append(btn, deleteBtn);
+    btn.innerText = title;
+    list.dataset.projectIndex = index;
+    btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
+    deleteBtn.innerText = CONSTANTS.TEXT.DELETE_ICON;
+    deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
+    list.append(btn, deleteBtn);
 
-  return list;
-}
+    return list;
+  }
 
-export function changeHeaderContent(text, index = 0) {
-  const projectTitle = document.querySelector(".js-project-title");
-  projectTitle.innerText = text;
-  projectTitle.dataset.projectIndex = index;
-}
+  static changeHeaderContent(text, index = 0) {
+    const projectTitle = document.querySelector(".js-project-title");
+    projectTitle.innerText = text;
+    projectTitle.dataset.projectIndex = index;
+  }
 
-export function displayAllTasks() {
-  clearCurrentDisplay();
-  const fragment = document.createDocumentFragment();
-  changeHeaderContent("Home");
+  static displayAllTasks() {
+    clearCurrentDisplay();
+    const fragment = document.createDocumentFragment();
+    this.changeHeaderContent("Home");
 
-  projects.forEach((project, index) => {
-    fragment.append(createTaskElements(project.tasks, index));
-  });
+    projects.forEach((project, index) => {
+      fragment.append(this.createTaskElements(project.tasks, index));
+    });
 
-  currentDisplay.append(fragment);
-}
+    currentDisplay.append(fragment);
+  }
 
-export function filterByProject(target) {
-  const text = target.textContent;
-  const index = target.closest("li").dataset.projectIndex;
-  changeHeaderContent(text, index);
+  static filterByProject(target) {
+    const text = target.textContent;
+    const index = target.closest("li").dataset.projectIndex;
+    this.changeHeaderContent(text, index);
 
-  clearCurrentDisplay();
-  currentDisplay.append(createTaskElements(projects[index].tasks, index));
-}
+    this.clearCurrentDisplay();
+    currentDisplay.append(
+      this.createTaskElements(projects[index].tasks, index)
+    );
+  }
 
-export function toggleForm() {
-  const projectForm = document.getElementById("projectForm");
-  projectForm.classList.toggle("hidden");
-}
+  static toggleForm() {
+    const projectForm = document.getElementById("projectForm");
+    projectForm.classList.toggle("hidden");
+  }
 
-export function viewTaskDetails(target) {
-  const viewDialog = document.getElementById("viewDialog");
-  const content = document.querySelector("#viewDialog > div");
+  static viewTaskDetails(target) {
+    const viewDialog = document.getElementById("viewDialog");
+    const content = document.querySelector("#viewDialog > div");
 
-  const task = getTaskAttribute(target).details;
+    const task = this.getTaskAttribute(target).details;
 
-  const [month, day, year] = task.date.split("-");
-  const formattedDate = format(new Date(year, month - 1, day), "MMM dd, yyyy");
+    const [month, day, year] = task.date.split("-");
+    const formattedDate = format(
+      new Date(year, month - 1, day),
+      "MMM dd, yyyy"
+    );
 
-  content.innerHTML = `<h3>${task.title}</h3>
+    content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
                        <p>${formattedDate}</p>
                        <p>${task.priority}</p>
                        <p>${task.status}</p>`;
 
-  viewDialog.showModal();
-}
-
-export function closeModal(target) {
-  const targetModal = target.closest("dialog");
-  targetModal.close();
-
-  if (targetModal.querySelector("form")) {
-    resetForm(targetModal);
+    viewDialog.showModal();
   }
-}
 
-function resetForm(target) {
-  target.querySelector("form").reset();
+  static closeModal(target) {
+    const targetModal = target.closest("dialog");
+    targetModal.close();
 
-  if (target.querySelector(".IDs")) {
-    target.querySelector("input#PID").value = "";
-    target.querySelector("input#TID").value = "";
+    if (targetModal.querySelector("form")) {
+      this.resetForm(targetModal);
+    }
   }
-}
 
-export function deleteTaskNode(target) {
-  const task = getTaskAttribute(target);
-  target.closest("div").remove();
-  const projectTasks = document.querySelectorAll(
-    "#currentDisplay > .project-tasks > .task-item"
-  );
-  projectTasks.forEach((el, index) => {
-    el.dataset.projectIndex = `${task.PID}-${index}`;
-  });
-}
+  static resetForm(target) {
+    target.querySelector("form").reset();
 
-export function openEditDialog(target) {
-  const task = getTaskAttribute(target);
-  populateEditForm(task);
-  editDialog.showModal();
-}
-
-function populateEditForm(task) {
-  const taskID = editDialog.querySelector("#TID");
-  const projectID = editDialog.querySelector("#PID");
-  const title = editDialog.querySelector("#title");
-  const description = editDialog.querySelector("#description");
-  const date = editDialog.querySelector("#date");
-  const priority = editDialog.querySelector(
-    `#priority > option[value=${task.details.priority}]`
-  );
-
-  const [month, day, year] = task.details.date.split("-");
-  const formattedDate = format(new Date(year, month - 1, day), "yyyy-MM-dd");
-
-  taskID.value = task.TID;
-  projectID.value = task.PID;
-  title.value = task.details.title;
-  description.value = task.details.description;
-  date.value = formattedDate;
-  priority.selected = true;
-}
-
-export function updateTaskNode(data) {
-  const currentTaskNode = document.querySelector(
-    `div[data-project-index="${data.PID}-${data.TID}"]`
-  );
-  const editedTaskNode = createTask(data, data.TID, data.PID);
-  currentTaskNode.replaceWith(editedTaskNode);
-}
-
-export function removeProjectTasks(target) {
-  const PID = target.closest("li").dataset.projectIndex;
-  const currentProject =
-    document.querySelector(".js-project-title").dataset.projectIndex;
-  if (currentProject === PID) {
-    displayAllTasks();
+    if (target.querySelector(".IDs")) {
+      target.querySelector("input#PID").value = "";
+      target.querySelector("input#TID").value = "";
+    }
   }
-  removeProjectButton(target);
-}
 
-function removeProjectButton(target) {
-  return target.closest("li").remove();
-}
+  static deleteTaskNode(target) {
+    const task = this.getTaskAttribute(target);
+    target.closest("div").remove();
+    const projectTasks = document.querySelectorAll(
+      "#currentDisplay > .project-tasks > .task-item"
+    );
+    projectTasks.forEach((el, index) => {
+      el.dataset.projectIndex = `${task.PID}-${index}`;
+    });
+  }
 
-function clearCurrentDisplay() {
-  currentDisplay.innerHTML = "";
-}
+  static openEditDialog(target) {
+    const task = this.getTaskAttribute(target);
+    this.populateEditForm(task);
+    editDialog.showModal();
+  }
 
-export function getTaskAttribute(target) {
-  const taskTarget = target.closest("div").dataset.projectIndex.split("-");
-  const PID = parseInt(taskTarget[0]);
-  const TID = parseInt(taskTarget[1]);
-  const details = projects[PID].tasks[TID];
+  static populateEditForm(task) {
+    const taskID = editDialog.querySelector("#TID");
+    const projectID = editDialog.querySelector("#PID");
+    const title = editDialog.querySelector("#title");
+    const description = editDialog.querySelector("#description");
+    const date = editDialog.querySelector("#date");
+    const priority = editDialog.querySelector(
+      `#priority > option[value=${task.details.priority}]`
+    );
 
-  return { details, PID, TID };
+    const [month, day, year] = task.details.date.split("-");
+    const formattedDate = format(new Date(year, month - 1, day), "yyyy-MM-dd");
+
+    taskID.value = task.TID;
+    projectID.value = task.PID;
+    title.value = task.details.title;
+    description.value = task.details.description;
+    date.value = formattedDate;
+    priority.selected = true;
+  }
+
+  static updateTaskNode(data) {
+    const currentTaskNode = document.querySelector(
+      `div[data-project-index="${data.PID}-${data.TID}"]`
+    );
+    const editedTaskNode = this.createTask(data, data.TID, data.PID);
+    currentTaskNode.replaceWith(editedTaskNode);
+  }
+
+  static removeProjectTasks(target) {
+    const PID = target.closest("li").dataset.projectIndex;
+    const currentProject =
+      document.querySelector(".js-project-title").dataset.projectIndex;
+    if (currentProject === PID) {
+      this.displayAllTasks();
+    }
+    this.removeProjectButton(target);
+  }
+
+  static removeProjectButton(target) {
+    return target.closest("li").remove();
+  }
+
+  static clearCurrentDisplay() {
+    currentDisplay.innerHTML = "";
+  }
+
+  static getTaskAttribute(target) {
+    const taskTarget = target.closest("div").dataset.projectIndex.split("-");
+    const PID = parseInt(taskTarget[0]);
+    const TID = parseInt(taskTarget[1]);
+    const details = projects[PID].tasks[TID];
+
+    return { details, PID, TID };
+  }
 }

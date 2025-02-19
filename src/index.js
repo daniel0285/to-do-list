@@ -1,6 +1,6 @@
 "use strict";
 import "./styles.scss";
-import * as TDLDom from "./DOM";
+import { TDLDom } from "./DOM";
 import { CONSTANTS } from "./constants";
 import { format } from "date-fns";
 
@@ -52,7 +52,7 @@ class Task {
 
 document.body.addEventListener("click", (e) => {
   if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
-    TDLDom.inputDialog.showModal();
+    inputDialog.showModal();
   }
 
   if (e.target.id === CONSTANTS.BUTTON_IDS.HOME) {
