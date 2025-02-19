@@ -64,7 +64,9 @@ document.body.addEventListener("click", (e) => {
   }
 
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.PROJECT_BTN)) {
-    TDLDom.filterByProject(e.target);
+    const index = e.target.closest("li").dataset.projectIndex;
+    TDLDom.filterByProject(index);
+    console.log(e.target.closest("li").dataset.projectIndex);
   }
 
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.VIEW)) {
@@ -158,13 +160,19 @@ function insertTask(target) {
 
 function deleteTask(target) {
   const task = TDLDom.getTaskAttribute(target);
-
   const projectArray = projects[task.PID].tasks;
   projectArray.length === 1
     ? projectArray.pop()
     : projectArray.splice(task.TID, 1);
+  updateDisplay();
+}
 
-  TDLDom.deleteTaskNode(target);
+function updateDisplay() {
+  const header = document.querySelector(".js-project-title");
+  const index = Number(header.dataset.projectIndex);
+  header.textContent === "Home"
+    ? TDLDom.displayAllTasks()
+    : TDLDom.filterByProject(index);
 }
 
 function deleteProject(target) {

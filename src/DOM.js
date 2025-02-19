@@ -80,9 +80,9 @@ export class TDLDom {
   }
 
   static displayAllTasks() {
-    clearCurrentDisplay();
-    const fragment = document.createDocumentFragment();
+    this.clearCurrentDisplay();
     this.changeHeaderContent("Home");
+    const fragment = document.createDocumentFragment();
 
     projects.forEach((project, index) => {
       fragment.append(this.createTaskElements(project.tasks, index));
@@ -91,11 +91,9 @@ export class TDLDom {
     currentDisplay.append(fragment);
   }
 
-  static filterByProject(target) {
-    const text = target.textContent;
-    const index = target.closest("li").dataset.projectIndex;
+  static filterByProject(index) {
+    const text = projects[index].title;
     this.changeHeaderContent(text, index);
-
     this.clearCurrentDisplay();
     currentDisplay.append(
       this.createTaskElements(projects[index].tasks, index)
@@ -110,21 +108,17 @@ export class TDLDom {
   static viewTaskDetails(target) {
     const viewDialog = document.getElementById("viewDialog");
     const content = document.querySelector("#viewDialog > div");
-
     const task = this.getTaskAttribute(target).details;
-
     const [month, day, year] = task.date.split("-");
     const formattedDate = format(
       new Date(year, month - 1, day),
       "MMM dd, yyyy"
     );
-
     content.innerHTML = `<h3>${task.title}</h3>
                        <p>${task.description}</p>
                        <p>${formattedDate}</p>
                        <p>${task.priority}</p>
                        <p>${task.status}</p>`;
-
     viewDialog.showModal();
   }
 
@@ -146,16 +140,17 @@ export class TDLDom {
     }
   }
 
-  static deleteTaskNode(target) {
-    const task = this.getTaskAttribute(target);
-    target.closest("div").remove();
-    const projectTasks = document.querySelectorAll(
-      "#currentDisplay > .project-tasks > .task-item"
-    );
-    projectTasks.forEach((el, index) => {
-      el.dataset.projectIndex = `${task.PID}-${index}`;
-    });
-  }
+  //   static deleteTaskNode(target) {
+  //     const task = this.getTaskAttribute(target);
+  //     target.closest("div").remove();
+  //     const projectTasks = document.querySelectorAll(
+  //       "#currentDisplay > .project-tasks > .task-item"
+  //     );
+  // projects[task.PID]
+  //     projectTasks.forEach((el) => {
+  //       el.dataset.projectIndex = `${task.PID}-${i}`;
+  //     });
+  //   }
 
   static openEditDialog(target) {
     const task = this.getTaskAttribute(target);
