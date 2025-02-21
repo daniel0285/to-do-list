@@ -1,4 +1,5 @@
-import { projects } from "./index";
+"use strict";
+import { projects } from "./logic";
 
 export class Storage {
   static retrieveData() {

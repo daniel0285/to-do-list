@@ -1,5 +1,6 @@
-import { projects } from "./index";
+"use strict";
 import { CONSTANTS } from "./constants";
+import { projects } from "./logic";
 import { format } from "date-fns";
 
 export class TDLDom {
@@ -204,6 +205,7 @@ export class TDLDom {
       item.dataset.projectIndex = index;
       const btn = document.createElement("button");
       btn.textContent = el.title;
+      btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
 
       if (item.dataset.projectIndex !== "0") {
         const deleteBtn = document.createElement("button");
