@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.body.addEventListener("click", (e) => {
   if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
-    inputDialog.showModal();
+    TDLDom.inputDialog.showModal();
   }
 
   if (e.target.id === CONSTANTS.BUTTON_IDS.HOME) {

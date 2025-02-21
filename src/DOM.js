@@ -2,13 +2,13 @@ import { projects } from "./index";
 import { CONSTANTS } from "./constants";
 import { format } from "date-fns";
 
-export const currentDisplay = document.querySelector(
-  "#currentDisplay > .project-tasks"
-);
-export const inputDialog = document.getElementById("inputDialog");
-const editDialog = document.getElementById("editDialog");
-
 export class TDLDom {
+  static currentDisplay = document.querySelector(
+    "#currentDisplay > .project-tasks"
+  );
+  static inputDialog = document.getElementById("inputDialog");
+  static editDialog = document.getElementById("editDialog");
+
   static createTask(task, index, projectIndex) {
     const taskDiv = document.createElement("div");
     taskDiv.className = `task-item ${task.priority.toLowerCase()}`;
@@ -60,8 +60,8 @@ export class TDLDom {
   }
 
   static insertTaskNode(data, taskID, projectID) {
-    currentDisplay.append(this.createTask(data, taskID, projectID));
-    inputDialog.close();
+    this.currentDisplay.append(this.createTask(data, taskID, projectID));
+    this.inputDialog.close();
   }
 
   static createProjectButton(title, index) {
@@ -94,14 +94,14 @@ export class TDLDom {
       fragment.append(this.createTaskElements(project.tasks, index));
     });
 
-    currentDisplay.append(fragment);
+    this.currentDisplay.append(fragment);
   }
 
   static filterByProject(index) {
     const text = projects[index].title;
     this.changeHeaderContent(text, index);
     this.clearCurrentDisplay();
-    currentDisplay.append(
+    this.currentDisplay.append(
       this.createTaskElements(projects[index].tasks, index)
     );
   }
@@ -149,7 +149,7 @@ export class TDLDom {
   static openEditDialog(target) {
     const task = this.getTaskAttribute(target);
     this.populateEditForm(task);
-    editDialog.showModal();
+    this.editDialog.showModal();
   }
 
   static populateEditForm(task) {
@@ -219,7 +219,7 @@ export class TDLDom {
   }
 
   static clearCurrentDisplay() {
-    currentDisplay.innerHTML = "";
+    this.currentDisplay.innerHTML = "";
   }
 
   static getTaskAttribute(target) {
