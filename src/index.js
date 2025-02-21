@@ -2,43 +2,8 @@
 import "./styles.scss";
 import { TDLDom } from "./DOM";
 import { CONSTANTS } from "./constants";
+import { Storage } from "./storage";
 import { format } from "date-fns";
-
-export const projects = [
-  {
-    title: "Default",
-    tasks: [
-      {
-        title: "Task #1",
-        description: "Description Here",
-        date: "02-19-2025",
-        priority: "High",
-        status: "Not Finished",
-      },
-      {
-        title: "Task #2",
-        description: "Description Here",
-        date: "02-19-2025",
-        priority: "Low",
-        status: "Not Finished",
-      },
-      {
-        title: "Task #3",
-        description: "Description Here",
-        date: "02-19-2025",
-        priority: "Medium",
-        status: "Not Finished",
-      },
-      {
-        title: "Task #4",
-        description: "Description Here",
-        date: "02-19-2025",
-        priority: "Medium",
-        status: "Not Finished",
-      },
-    ],
-  },
-];
 
 class Task {
   constructor(title, description, date, priority, status) {
@@ -49,6 +14,8 @@ class Task {
     this.status = status;
   }
 }
+
+export const projects = Storage.retrieveData();
 
 document.body.addEventListener("click", (e) => {
   if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
@@ -66,7 +33,6 @@ document.body.addEventListener("click", (e) => {
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.PROJECT_BTN)) {
     const index = e.target.closest("li").dataset.projectIndex;
     TDLDom.filterByProject(index);
-    console.log(e.target.closest("li").dataset.projectIndex);
   }
 
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.VIEW)) {
@@ -83,11 +49,12 @@ document.body.addEventListener("click", (e) => {
 
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.DELETE)) {
     deleteTask(e.target);
-    console.log(projects);
+    Storage.storeData();
   }
 
   if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.DELETE_PROJECT)) {
     deleteProject(e.target);
+    Storage.storeData();
   }
 });
 
@@ -96,20 +63,24 @@ document.body.addEventListener("submit", (e) => {
 
   if (e.target.id === CONSTANTS.FORM_IDS.INPUT) {
     insertTask(e.target);
+    Storage.storeData();
   }
 
   if (e.target.id === CONSTANTS.FORM_IDS.PROJECT) {
     createNewProject(e.target);
+    Storage.storeData();
   }
 
   if (e.target.id === CONSTANTS.FORM_IDS.EDIT) {
     editTaskDetails(e.target);
+    Storage.storeData();
   }
 });
 
 document.body.addEventListener("change", (e) => {
   if (e.target.className === CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX) {
     updateTaskStatus(e.target);
+    Storage.storeData();
   }
 });
 
@@ -155,7 +126,6 @@ function insertTask(target) {
 
   TDLDom.insertTaskNode(projects[PID].tasks[TID], TID, PID);
   target.reset();
-  console.log(projects);
 }
 
 function deleteTask(target) {
@@ -193,8 +163,6 @@ function updateTaskStatus(target) {
   )
     ? CONSTANTS.STATUS.COMPLETE
     : CONSTANTS.STATUS.INCOMPLETE;
-
-  console.log(currentTaskData);
 }
 
 function editTaskDetails(target) {

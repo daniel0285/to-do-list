@@ -29,6 +29,12 @@ export class TDLDom {
 
     status.setAttribute("type", "checkbox");
     status.className = CONSTANTS.CLASS_NAMES.STATUS_CHECKBOX;
+    if (task.status === CONSTANTS.STATUS.COMPLETE) {
+      status.checked = true;
+      taskDiv.classList.add(CONSTANTS.CLASS_NAMES.COMPLETE);
+    } else {
+      status.checked = false;
+    }
     title.textContent = task.title;
     date.textContent = formattedDate;
     viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
