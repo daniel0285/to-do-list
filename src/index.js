@@ -17,6 +17,11 @@ class Task {
 
 export const projects = Storage.retrieveData();
 
+document.addEventListener("DOMContentLoaded", () => {
+  TDLDom.displayAllProjects();
+  TDLDom.displayAllTasks();
+});
+
 document.body.addEventListener("click", (e) => {
   if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
     inputDialog.showModal();

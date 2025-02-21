@@ -2,7 +2,11 @@ import { projects } from "./index";
 
 export class Storage {
   static retrieveData() {
-    return JSON.parse(localStorage.getItem("projects"));
+    if (localStorage.getItem("projects")) {
+      return JSON.parse(localStorage.getItem("projects"));
+    } else {
+      return [{ title: "Default", tasks: [] }];
+    }
   }
 
   static storeData() {

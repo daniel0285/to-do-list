@@ -146,18 +146,6 @@ export class TDLDom {
     }
   }
 
-  //   static deleteTaskNode(target) {
-  //     const task = this.getTaskAttribute(target);
-  //     target.closest("div").remove();
-  //     const projectTasks = document.querySelectorAll(
-  //       "#currentDisplay > .project-tasks > .task-item"
-  //     );
-  // projects[task.PID]
-  //     projectTasks.forEach((el) => {
-  //       el.dataset.projectIndex = `${task.PID}-${i}`;
-  //     });
-  //   }
-
   static openEditDialog(target) {
     const task = this.getTaskAttribute(target);
     this.populateEditForm(task);
@@ -205,6 +193,29 @@ export class TDLDom {
 
   static removeProjectButton(target) {
     return target.closest("li").remove();
+  }
+
+  static displayAllProjects() {
+    const projectList = document.querySelector("ul#projects");
+    const fragment = document.createDocumentFragment();
+
+    projects.forEach((el, index) => {
+      const item = document.createElement("li");
+      item.dataset.projectIndex = index;
+      const btn = document.createElement("button");
+      btn.textContent = el.title;
+
+      if (item.dataset.projectIndex !== "0") {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
+        deleteBtn.textContent = CONSTANTS.TEXT.DELETE_ICON;
+        item.append(btn, deleteBtn);
+      } else {
+        item.append(btn);
+      }
+      fragment.append(item);
+    });
+    projectList.append(fragment);
   }
 
   static clearCurrentDisplay() {
