@@ -1,5 +1,94 @@
-#dialog::backdrop {
-  background-color: salmon;
+@mixin center() {
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-col() {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+@mixin flex-row() {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 1px solid red;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  width: 100%;
+  @include flex-col();
+  @include center();
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+header,
+footer {
+  padding: 0.5rem;
+}
+
+.wrapper {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  width: 100%;
+
+  nav {
+    background-color: #ff8888;
+    @include flex-col();
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  ul {
+    @include flex-col();
+    gap: 1rem;
+
+    li {
+      list-style: inside;
+      @include flex-row();
+    }
+
+    button {
+      outline-color: transparent;
+      background-color: transparent;
+      padding: 0.5rem;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+
+      &:hover {
+        background-color: red;
+      }
+    }
+  }
+
+  #currentDisplay {
+    background-color: aquamarine;
+  }
+}
+
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+}
+
+dialog::backdrop {
+  background-color: rgba(250, 128, 114, 0.333);
 }
 
 textarea {

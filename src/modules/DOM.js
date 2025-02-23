@@ -66,18 +66,32 @@ export class TDLDom {
   }
 
   static createProjectButton(title, index) {
-    const list = document.createElement("li");
+    const item = document.createElement("li");
+    item.dataset.projectIndex = index;
     const btn = document.createElement("button");
-    const deleteBtn = document.createElement("button");
-
-    btn.innerText = title;
-    list.dataset.projectIndex = index;
+    btn.textContent = title;
     btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
-    deleteBtn.innerText = CONSTANTS.TEXT.DELETE_ICON;
-    deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
-    list.append(btn, deleteBtn);
 
-    return list;
+    if (item.dataset.projectIndex !== "0") {
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
+      deleteBtn.textContent = CONSTANTS.TEXT.DELETE_ICON;
+      item.append(btn, deleteBtn);
+    } else {
+      item.append(btn);
+    }
+
+    return item;
+  }
+
+  static displayAllProjects() {
+    const projectList = document.querySelector("ul#projects");
+    const fragment = document.createDocumentFragment();
+
+    projects.forEach((el, index) => {
+      fragment.append(this.createProjectButton(el.title, index));
+    });
+    projectList.append(fragment);
   }
 
   static changeHeaderContent(text, index = 0) {
@@ -194,30 +208,6 @@ export class TDLDom {
 
   static removeProjectButton(target) {
     return target.closest("li").remove();
-  }
-
-  static displayAllProjects() {
-    const projectList = document.querySelector("ul#projects");
-    const fragment = document.createDocumentFragment();
-
-    projects.forEach((el, index) => {
-      const item = document.createElement("li");
-      item.dataset.projectIndex = index;
-      const btn = document.createElement("button");
-      btn.textContent = el.title;
-      btn.className = CONSTANTS.CLASS_NAMES.PROJECT_BTN;
-
-      if (item.dataset.projectIndex !== "0") {
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = CONSTANTS.CLASS_NAMES.DELETE_PROJECT;
-        deleteBtn.textContent = CONSTANTS.TEXT.DELETE_ICON;
-        item.append(btn, deleteBtn);
-      } else {
-        item.append(btn);
-      }
-      fragment.append(item);
-    });
-    projectList.append(fragment);
   }
 
   static clearCurrentDisplay() {

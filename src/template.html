@@ -11,26 +11,30 @@
     <header>
         <h1>To Do List</h1>
     </header>
-    <nav>
-        <ul id="filter">
-            <li><button id="home">Home</button></li>
-        </ul>
-        <h2>Project</h2>
-        <ul id="projects">
-            <!-- <li data-project-index="0"><button class="js-project-btn">Default</button></li> -->
-        </ul>
-        <form id="projectForm" class="hidden">
-            <label for='projectInput'>Project Name</label>
-            <input type='text' name='title' id="projectInput" required>
-            <input type='submit' value='Submit'>
-        </form>
-        <button id="projectBtn">New Project</button>
-    </nav>
-    <main id="currentDisplay">
-        <h2 class="js-project-title" data-project-index="0"></h2>
-        <div class="project-tasks"></div>
-        <button id="addBtn">Add</button>
+    <main class="wrapper">
+        <nav>
+            <ul id="filter">
+                <li><button id="home">Home</button></li>
+            </ul>
+            <h2>Project</h2>
+            <ul id="projects">
+            </ul>
+            <form id="projectForm" class="hidden">
+                <label for='projectInput'>Project Name</label>
+                <input type='text' name='title' id="projectInput" required>
+                <input type='submit' value='Submit'>
+            </form>
+            <button id="projectBtn">New Project</button>
+        </nav>
+        <div id="currentDisplay">
+            <h2 class="js-project-title" data-project-index="0"></h2>
+            <div class="project-tasks"></div>
+            <button id="addBtn">Add</button>
+        </div>
     </main>
+    <footer>
+        <p>Footer text</p>
+    </footer>
     <dialog id="inputDialog">
         <form id="inputForm">
             <h2>New Task</h2>

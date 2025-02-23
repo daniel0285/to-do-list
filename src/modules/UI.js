@@ -23,7 +23,6 @@ export function ToDoListHandler() {
     if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.PROJECT_BTN)) {
       const index = e.target.closest("li").dataset.projectIndex;
       TDLDom.filterByProject(index);
-      console.log(index);
     }
 
     if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.VIEW)) {
