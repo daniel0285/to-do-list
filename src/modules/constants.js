@@ -13,7 +13,7 @@ export const CONSTANTS = {
     EDIT: "Edit",
     DELETE: "Delete",
     DELETE_ICON: "✕",
-    HOME: "Home",
+    HOME: "All Tasks",
   },
   BUTTON_IDS: {
     ADD: "addBtn",

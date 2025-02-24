@@ -102,7 +102,7 @@ export class TDLDom {
 
   static displayAllTasks() {
     this.clearCurrentDisplay();
-    this.changeHeaderContent("Home");
+    this.changeHeaderContent(CONSTANTS.TEXT.HOME);
     const fragment = document.createDocumentFragment();
 
     projects.forEach((project, index) => {

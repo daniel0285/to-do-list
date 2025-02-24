@@ -1,3 +1,6 @@
+$text-clr-light: rgb(255, 246, 246);
+$text-clr-dark: rgb(20, 20, 20);
+
 @mixin center() {
   justify-content: center;
   align-items: center;
@@ -13,11 +16,14 @@
   flex-flow: row wrap;
 }
 
+@mixin transition() {
+  transition: 0.3s ease all;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  outline: 1px solid red;
 }
 
 html {
@@ -38,45 +44,161 @@ footer {
   padding: 0.5rem;
 }
 
-.wrapper {
+.main-wrapper {
   flex-grow: 1;
   display: grid;
   grid-template-columns: 1fr 5fr;
   width: 100%;
+}
 
-  nav {
-    background-color: #ff8888;
-    @include flex-col();
-    gap: 2rem;
-    padding: 1.5rem;
+nav {
+  background-color: #4d4d4d;
+  @include flex-col();
+  gap: 1rem;
+  padding: 1.5rem 0rem;
+
+  h2 {
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: center;
+    color: $text-clr-light;
   }
 
   ul {
     @include flex-col();
-    gap: 1rem;
 
     li {
-      list-style: inside;
-      @include flex-row();
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 1rem;
+
+      &:hover {
+        #home,
+        .js-delete-project,
+        .js-project-btn {
+          color: $text-clr-light;
+        }
+        background-color: rgb(126, 126, 126);
+      }
     }
 
     button {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    #home,
+    .js-project-btn {
+      text-align: left;
       outline-color: transparent;
       background-color: transparent;
-      padding: 0.5rem;
-      cursor: pointer;
+      color: $text-clr-light;
+      flex-grow: 1;
+      padding: 0.8rem 0rem;
       border: none;
-      width: 100%;
+      cursor: pointer;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
+    .js-delete-project {
+      color: transparent;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  form {
+    text-align: center;
+    @include flex-col();
+    gap: 0.5rem;
+    padding: 1rem 0.3rem;
+    border-top: 2px solid rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(255, 255, 255);
+
+    label {
+      font-weight: bold;
+      color: $text-clr-light;
+    }
+
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      outline: none;
+      border: none;
+      border-bottom: 2px solid $text-clr-light;
+      padding: 0.3rem;
+      font-size: 1rem;
+      background-color: transparent;
+      color: $text-clr-light;
+
+      &::placeholder {
+        color: rgba(177, 177, 177, 0.67);
+      }
+
+      &:focus {
+        border-bottom: 2px solid rgb(0, 217, 255);
+      }
+    }
+
+    input[type="submit"] {
+      padding: 0.3rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      width: 60%;
+
+      outline: 2px solid $text-clr-light;
+      background-color: transparent;
+      color: $text-clr-light;
+      cursor: pointer;
+      @include transition();
 
       &:hover {
-        background-color: red;
+        background-color: rgb(0, 217, 255);
+        color: $text-clr-dark;
+        outline: transparent;
       }
     }
   }
 
-  #currentDisplay {
-    background-color: aquamarine;
+  #projectBtn {
+    padding: 0.5rem;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+
+    outline: 2px solid $text-clr-light;
+    background-color: transparent;
+    color: $text-clr-light;
+    cursor: pointer;
+    @include transition();
+
+    &:hover {
+      background-color: $text-clr-light;
+      color: $text-clr-dark;
+    }
   }
+}
+
+#currentDisplay {
+  background-color: rgb(114, 114, 114);
 }
 
 dialog {
