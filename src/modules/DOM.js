@@ -18,7 +18,6 @@ export class TDLDom {
     const status = document.createElement("input");
     const title = document.createElement("h3");
     const date = document.createElement("p");
-    const viewBtn = document.createElement("button");
     const editBtn = document.createElement("button");
     const deleteBtn = document.createElement("button");
 
@@ -38,14 +37,12 @@ export class TDLDom {
     }
     title.textContent = task.title;
     date.textContent = formattedDate;
-    viewBtn.className = `btn ${CONSTANTS.CLASS_NAMES.VIEW}`;
-    viewBtn.textContent = CONSTANTS.TEXT.VIEW;
     editBtn.className = `btn ${CONSTANTS.CLASS_NAMES.EDIT}`;
     editBtn.textContent = CONSTANTS.TEXT.EDIT;
     deleteBtn.textContent = CONSTANTS.TEXT.DELETE;
     deleteBtn.className = `btn ${CONSTANTS.CLASS_NAMES.DELETE}`;
 
-    taskDiv.append(title, date, status, viewBtn, editBtn, deleteBtn);
+    taskDiv.append(status, title, date, editBtn, deleteBtn);
     return taskDiv;
   }
 
@@ -215,7 +212,9 @@ export class TDLDom {
   }
 
   static getTaskAttribute(target) {
-    const taskTarget = target.closest("div").dataset.projectIndex.split("-");
+    const taskTarget = target
+      .closest(".task-item")
+      .dataset.projectIndex.split("-");
     const PID = parseInt(taskTarget[0]);
     const TID = parseInt(taskTarget[1]);
     const details = projects[PID].tasks[TID];

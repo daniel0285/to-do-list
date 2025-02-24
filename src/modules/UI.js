@@ -25,7 +25,11 @@ export function ToDoListHandler() {
       TDLDom.filterByProject(index);
     }
 
-    if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.VIEW)) {
+    if (
+      e.target.classList.contains("task-item") ||
+      e.target.matches("p") ||
+      e.target.matches("h3")
+    ) {
       TDLDom.viewTaskDetails(e.target);
     }
 

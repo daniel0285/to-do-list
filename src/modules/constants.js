@@ -11,7 +11,7 @@ export const CONSTANTS = {
   TEXT: {
     VIEW: "View",
     EDIT: "Edit",
-    DELETE: "Delete",
+    DELETE: "✕",
     DELETE_ICON: "✕",
     HOME: "All Tasks",
   },
@@ -22,7 +22,7 @@ export const CONSTANTS = {
   },
   CLASS_NAMES: {
     PROJECT_BTN: "js-project-btn",
-    VIEW: "js-view",
+    VIEW: "task-item",
     EDIT: "js-edit",
     CLOSE: "js-close-btn",
     DELETE: "js-delete",

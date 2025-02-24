@@ -32,26 +32,18 @@
 
         </nav>
         <div id="currentDisplay">
-            <h2 class="js-project-title" data-project-index="0"></h2>
-            <div class="project-tasks">
-                <div class="task-item low" data-project-index="0-0">
-                    <h3>sadas</h3>
-                    <p>Feb 22, 2025</p><input type="checkbox" class="status-checkbox"><button
-                        class="btn js-view">View</button><button class="btn js-edit">Edit</button><button
-                        class="btn js-delete">Delete</button>
-                </div>
-                <div class="task-item low" data-project-index="0-0">
-                    <h3>sadas</h3>
-                    <p>Feb 22, 2025</p><input type="checkbox" class="status-checkbox"><button
-                        class="btn js-view">View</button><button class="btn js-edit">Edit</button><button
-                        class="btn js-delete">Delete</button>
-                </div>
+            <div class="project-header">
+                <h2 class="js-project-title" data-project-index="0"></h2>
+                <button id="addBtn" aria-label="Add Task">+</button>
             </div>
-            <button id="addBtn">Add</button>
+            <div class="project-tasks">
+            </div>
         </div>
     </main>
     <footer>
         <p>Footer text</p>
+
+        <input type="color">
     </footer>
     <dialog id="inputDialog">
         <form id="inputForm">
