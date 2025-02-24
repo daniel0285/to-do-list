@@ -42,8 +42,6 @@
     </main>
     <footer>
         <p>Footer text</p>
-
-        <input type="color">
     </footer>
     <dialog id="inputDialog">
         <form id="inputForm">
@@ -68,7 +66,7 @@
                     <option value="High">High</option>
                 </select>
             </div>
-            <input type="submit" id="submit">
+            <input type="submit" class="form-submit" id="submit">
             <button class="js-close-btn">Cancel</button>
 
         </form>
@@ -76,11 +74,6 @@
     <dialog id="editDialog">
         <form id="editForm">
             <h2>Edit Task Details</h2>
-            <div class="IDs">
-                <input type="hidden" name="TID" id="TID">
-                <input type="hidden" name="PID" id="PID">
-            </div>
-
             <div class="input-field">
                 <label for="title">Name</label>
                 <input type="text" name="title" id="title" required>
@@ -101,8 +94,12 @@
                     <option value="High">High</option>
                 </select>
             </div>
-            <input type="submit" id="submit">
+            <input type="submit" class="form-submit" id="submit">
             <button class="js-close-btn">Cancel</button>
+            <div class="IDs">
+                <input type="hidden" name="TID" id="TID">
+                <input type="hidden" name="PID" id="PID">
+            </div>
         </form>
     </dialog>
     <dialog id="viewDialog">

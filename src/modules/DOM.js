@@ -133,10 +133,10 @@ export class TDLDom {
       "MMM dd, yyyy"
     );
     content.innerHTML = `<h3>${task.title}</h3>
-                       <p>${task.description}</p>
-                       <p>${formattedDate}</p>
-                       <p>${task.priority}</p>
-                       <p>${task.status}</p>`;
+                       <p>Description: ${task.description}</p>
+                       <p>Deadline: ${formattedDate}</p>
+                       <p>Importance: ${task.priority}</p>
+                       <p>Status: ${task.status}</p>`;
     viewDialog.showModal();
   }
 
