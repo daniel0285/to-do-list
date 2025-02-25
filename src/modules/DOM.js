@@ -118,6 +118,12 @@ export class TDLDom {
     );
   }
 
+  static changeCurrentSelected(target) {
+    const selected = document.querySelector(".selected");
+    selected.classList.remove("selected");
+    target.closest("li").classList.add("selected");
+  }
+
   static toggleForm() {
     const projectForm = document.getElementById("projectForm");
     projectForm.classList.toggle("hidden");
@@ -220,5 +226,11 @@ export class TDLDom {
     const details = projects[PID].tasks[TID];
 
     return { details, PID, TID };
+  }
+
+  static setFooterText() {
+    const footer = document.querySelector("footer > p");
+
+    footer.textContent = `Copyright © ${new Date().getFullYear()} daniel`;
   }
 }

@@ -6,6 +6,7 @@ import { Controller } from "./logic";
 export function ToDoListHandler() {
   TDLDom.displayAllProjects();
   TDLDom.displayAllTasks();
+  TDLDom.setFooterText();
 
   document.body.addEventListener("click", (e) => {
     if (e.target.id === CONSTANTS.BUTTON_IDS.ADD) {
@@ -14,6 +15,7 @@ export function ToDoListHandler() {
 
     if (e.target.id === CONSTANTS.BUTTON_IDS.HOME) {
       TDLDom.displayAllTasks();
+      TDLDom.changeCurrentSelected(e.target);
     }
 
     if (e.target.id === CONSTANTS.BUTTON_IDS.PROJECT) {
@@ -23,12 +25,13 @@ export function ToDoListHandler() {
     if (e.target.classList.contains(CONSTANTS.CLASS_NAMES.PROJECT_BTN)) {
       const index = e.target.closest("li").dataset.projectIndex;
       TDLDom.filterByProject(index);
+      TDLDom.changeCurrentSelected(e.target);
     }
 
     if (
       e.target.classList.contains("task-item") ||
-      e.target.matches("p") ||
-      e.target.matches("h3")
+      e.target.matches(".task-item > h3") ||
+      e.target.matches(".task-item > p")
     ) {
       TDLDom.viewTaskDetails(e.target);
     }

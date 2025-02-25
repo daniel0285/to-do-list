@@ -1,5 +1,8 @@
-$text-clr-light: rgb(255, 246, 246);
-$text-clr-dark: rgb(20, 20, 20);
+$bg-clr: #202020;
+$primary-clr: #2e2e2e;
+$secondary-clr: #5b5b5b;
+$highlight-clr: #abfeff;
+$text-clr: #faf9f6;
 
 @mixin center() {
   justify-content: center;
@@ -36,7 +39,11 @@ body {
 
 header,
 footer {
-  padding: 0.5rem;
+  padding: 0.8rem;
+  background-color: $primary-clr;
+  width: 100%;
+  text-align: center;
+  color: $text-clr;
 }
 
 textarea {
@@ -44,7 +51,7 @@ textarea {
 }
 
 nav {
-  background-color: #4d4d4d;
+  background-color: $primary-clr;
   @include flex(column);
   gap: 1rem;
   padding: 1.5rem 0rem;
@@ -53,11 +60,16 @@ nav {
     text-decoration: underline;
     font-weight: bold;
     text-align: center;
-    color: $text-clr-light;
+    color: $text-clr;
   }
 
   ul {
     @include flex(column);
+
+    button#home {
+      text-align: center;
+      font-size: 1.3rem;
+    }
 
     li {
       display: flex;
@@ -69,9 +81,9 @@ nav {
         #home,
         .js-delete-project,
         .js-project-btn {
-          color: $text-clr-light;
+          color: $text-clr;
         }
-        background-color: rgb(126, 126, 126);
+        background-color: $secondary-clr;
       }
     }
 
@@ -85,7 +97,7 @@ nav {
       text-align: left;
       outline-color: transparent;
       background-color: transparent;
-      color: $text-clr-light;
+      color: $text-clr;
       flex-grow: 1;
       padding: 0.8rem 0rem;
       border: none;
@@ -110,12 +122,12 @@ nav {
     @include flex(column);
     gap: 0.5rem;
     padding: 1rem 0.3rem;
-    border-top: 2px solid rgb(255, 255, 255);
-    border-bottom: 2px solid rgb(255, 255, 255);
+    border-top: 2px solid $text-clr;
+    border-bottom: 2px solid $text-clr;
 
     label {
       font-weight: bold;
-      color: $text-clr-light;
+      color: $text-clr;
     }
 
     .input-wrapper {
@@ -129,14 +141,14 @@ nav {
       flex-grow: 1;
       outline: none;
       border: none;
-      border-bottom: 2px solid $text-clr-light;
+      border-bottom: 2px solid $text-clr;
       padding: 0.3rem;
       font-size: 1rem;
       background-color: transparent;
-      color: $text-clr-light;
+      color: $text-clr;
 
       &::placeholder {
-        color: rgba(177, 177, 177, 0.67);
+        color: $secondary-clr;
       }
 
       &:focus {
@@ -152,15 +164,15 @@ nav {
       font-weight: bold;
       width: 60%;
 
-      outline: 2px solid $text-clr-light;
+      outline: 2px solid $text-clr;
       background-color: transparent;
-      color: $text-clr-light;
+      color: $text-clr;
       cursor: pointer;
       @include transition();
 
       &:hover {
-        background-color: rgb(0, 217, 255);
-        color: $text-clr-dark;
+        background-color: $highlight-clr;
+        color: $primary-clr;
         outline: transparent;
       }
     }
@@ -176,15 +188,15 @@ nav {
     font-size: 1rem;
     font-weight: bold;
 
-    outline: 2px solid $text-clr-light;
+    outline: 2px solid $text-clr;
     background-color: transparent;
-    color: $text-clr-light;
+    color: $text-clr;
     cursor: pointer;
     @include transition();
 
     &:hover {
-      background-color: $text-clr-light;
-      color: $text-clr-dark;
+      background-color: $text-clr;
+      color: $primary-clr;
     }
   }
 }
@@ -197,7 +209,7 @@ nav {
 }
 
 #currentDisplay {
-  background-color: rgb(71, 71, 71);
+  background-color: $bg-clr;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -211,27 +223,27 @@ nav {
   }
 
   h2 {
-    color: $text-clr-light;
+    color: $text-clr;
     padding-left: 10px;
-    border-left: 4px dotted $text-clr-light;
+    border-left: 4px dotted $text-clr;
   }
 
   #addBtn {
     display: block;
     background-color: transparent;
-    color: $text-clr-light;
+    color: $text-clr;
     cursor: pointer;
     @include transition();
     align-self: center;
     font-size: 1.8rem;
     font-weight: bold;
-    border: 3px solid $text-clr-light;
+    border: 3px solid $text-clr;
     width: 40px;
     height: 40px;
     border-radius: 100%;
 
     &:hover {
-      background-color: $text-clr-light;
+      background-color: $text-clr;
       color: #4d4d4d;
     }
   }
@@ -245,8 +257,8 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #767676;
-    color: $text-clr-light;
+    background-color: $primary-clr;
+    color: $text-clr;
     padding: 1.5rem;
     border-radius: 0px 10px 10px 0px;
     cursor: pointer;
@@ -265,7 +277,7 @@ nav {
     }
 
     .status-checkbox {
-      accent-color: #8cf9ff;
+      accent-color: $highlight-clr;
 
       transform: scale(2.3);
       cursor: pointer;
@@ -275,21 +287,21 @@ nav {
       border: none;
       font-weight: bold;
       background-color: transparent;
-      color: $text-clr-light;
+      color: $text-clr;
       cursor: pointer;
       @include transition();
     }
 
     .js-edit {
-      outline: 2px solid $text-clr-light;
+      outline: 2px solid $text-clr;
       border-radius: 3px;
       font-size: 1rem;
       padding: 0.5rem;
       text-transform: uppercase;
 
       &:hover {
-        background-color: $text-clr-light;
-        color: #767676;
+        background-color: $text-clr;
+        color: $secondary-clr;
       }
     }
 
@@ -318,8 +330,8 @@ dialog {
   left: 50%;
   transform: translate(-50%, -50%);
 
-  background-color: #4d4d4d;
-  border: 3px solid rgb(124, 124, 124);
+  background-color: $primary-clr;
+  border: 3px solid $secondary-clr;
   border-radius: 10px;
   padding: 1.5rem;
   min-width: 300px;
@@ -327,7 +339,7 @@ dialog {
   .task-content {
     @include flex(column);
     gap: 1rem;
-    color: $text-clr-light;
+    color: $text-clr;
     h3 {
       text-align: center;
       font-size: 1.5rem;
@@ -341,7 +353,7 @@ dialog {
   form {
     @include flex(column);
     gap: 1rem;
-    color: $text-clr-light;
+    color: $text-clr;
 
     input,
     textarea,
@@ -364,18 +376,18 @@ dialog {
     border: none;
     font-weight: bold;
     background-color: transparent;
-    color: $text-clr-light;
+    color: $text-clr;
     cursor: pointer;
     @include transition();
-    outline: 2px solid $text-clr-light;
+    outline: 2px solid $text-clr;
     border-radius: 3px;
     font-size: 1rem;
     padding: 0.3rem;
     width: 100%;
 
     &:hover {
-      background-color: $text-clr-light;
-      color: #767676;
+      background-color: $text-clr;
+      color: $secondary-clr;
     }
   }
 
@@ -391,6 +403,15 @@ dialog {
 
 .hidden {
   display: none;
+}
+
+li.selected {
+  color: $text-clr;
+  background-color: $secondary-clr;
+  border-left: 5px solid $highlight-clr;
+  .js-delete-project {
+    color: $text-clr;
+  }
 }
 
 .complete {

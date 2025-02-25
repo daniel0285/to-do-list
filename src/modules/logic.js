@@ -37,7 +37,9 @@ export class Controller {
   static insertTask(target) {
     const taskData = this.getFormData(target);
 
-    const currentProject = document.querySelector("#currentDisplay > h2");
+    const currentProject = document.querySelector(
+      "#currentDisplay > .project-header > h2"
+    );
     const PID = currentProject.dataset.projectIndex;
 
     const [year, month, day] = taskData.date.split("-");
