@@ -1,8 +1,20 @@
 $bg-clr: #202020;
 $primary-clr: #2e2e2e;
-$secondary-clr: #5b5b5b;
+$secondary-clr: #484848;
 $highlight-clr: #abfeff;
 $text-clr: #faf9f6;
+
+.high {
+  border-left: 8px solid rgb(255, 129, 129);
+}
+
+.medium {
+  border-left: 8px solid rgb(255, 238, 127);
+}
+
+.low {
+  border-left: 8px solid rgb(182, 255, 130);
+}
 
 @mixin center() {
   justify-content: center;
@@ -244,7 +256,7 @@ nav {
 
     &:hover {
       background-color: $text-clr;
-      color: #4d4d4d;
+      color: $bg-clr;
     }
   }
 
@@ -260,8 +272,13 @@ nav {
     background-color: $primary-clr;
     color: $text-clr;
     padding: 1.5rem;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 35px 35px 0px;
     cursor: pointer;
+    @include transition();
+
+    &:hover {
+      background-color: $secondary-clr;
+    }
 
     p,
     h3 {
@@ -310,18 +327,6 @@ nav {
       font-size: 1.5rem;
     }
   }
-}
-
-.high {
-  border-left: 8px solid rgb(255, 117, 117);
-}
-
-.medium {
-  border-left: 8px solid rgb(249, 222, 49);
-}
-
-.low {
-  border-left: 8px solid rgb(175, 255, 117);
 }
 
 dialog {
@@ -387,7 +392,7 @@ dialog {
 
     &:hover {
       background-color: $text-clr;
-      color: $secondary-clr;
+      color: $primary-clr;
     }
   }
 
