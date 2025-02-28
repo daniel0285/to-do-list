@@ -164,7 +164,7 @@ nav {
       }
 
       &:focus {
-        border-bottom: 2px solid rgb(0, 217, 255);
+        border-bottom: 2px solid $highlight-clr;
       }
     }
 
